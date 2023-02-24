@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6642533537405222950}
   - component: {fileID: 6642533537405222951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBulletCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 6642533538171067933}
   - component: {fileID: 6642533538171067932}
   - component: {fileID: 6642533538171067934}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,7 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6642533538739971072}
   - component: {fileID: 6642533538739971073}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBulletSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

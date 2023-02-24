@@ -9,7 +9,7 @@ public class FirstEnemyMovement : EnemyBaseClass
     #endregion
 
     Rigidbody2D rb;
-    BoxCollider2D detectionCollider;
+   
 
     float sinCenterY;
 
@@ -25,7 +25,7 @@ public class FirstEnemyMovement : EnemyBaseClass
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        detectionCollider = GetComponent<BoxCollider2D>();
+        
         StartCoroutine(EnemyMovementPattern());
         StartCoroutine(SineMovement());
        
