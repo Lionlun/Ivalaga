@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 8699230927608612679}
   m_Layer: 6
   m_Name: TESTBOSS
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,8 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30594c74d9128d740b798bae641067f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 100
-  enemySpeed: 10
+  rb: {fileID: 0}
 --- !u!50 &8699230927608612678
 Rigidbody2D:
   serializedVersion: 4

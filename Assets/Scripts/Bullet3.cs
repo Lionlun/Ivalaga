@@ -6,14 +6,12 @@ internal class Bullet3 : MonoBehaviour, IPlayerBullet
     [SerializeField] Transform ShootingPoint;
     [SerializeField] Player Player;
 
-    private int simpleBulletOwnDamage = 30;
+    private int bulletOwnDamage = 30;
     public void Shoot()
     {
-       
-        Debug.Log("I shoot bullet3");
-
+   
         Instantiate(Bullet, ShootingPoint.position, Quaternion.identity);
-        Player.OwnDamage(simpleBulletOwnDamage);
+        Player.OwnDamage(bulletOwnDamage);
     }
 
 }

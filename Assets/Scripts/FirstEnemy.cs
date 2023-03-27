@@ -52,23 +52,23 @@ public class FirstEnemy : EnemyBaseClass
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.tag == "Projectile")
-        {
-            Destroy(collision.gameObject);
-            Debug.Log("EnemyHit");
-            EnemyTakeDamage(10);
-        }
-
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
        
+       
+            //Debug.Log("huyfgfgf");
 
+            //Destroy(collision.gameObject);
+            //Debug.Log("EnemyHit");
 
+            //EnemyTakeDamage(10);
+        
     }
+
+
+
+
+    
 
 }
 

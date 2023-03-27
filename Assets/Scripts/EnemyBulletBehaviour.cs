@@ -22,8 +22,18 @@ public class EnemyBulletBehaviour : MonoBehaviour
         transform.Translate(Vector3.down * enemyBulletSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "Player")
+        {
+            Player player = collision.gameObject.GetComponentInParent<Player>();
+            player.OwnDamage(10);
+            player.TakePoints(10);
+            
+            Debug.Log("8787");
+        }
         Destroy(gameObject);
     }
+
+  
 }

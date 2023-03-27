@@ -6,11 +6,17 @@ using UnityEngine;
 
 public class InputController : MonoBehaviour
 {
-    public Player Player;
-    public PlayerGun Gun;
+    public Player player;
+    public PlayerGun gun;
+    public Animator animator;
 
     [SerializeField]float timerForNextAttack, cooldown;
 
+    [SerializeField] ScriptableObject playerFirstPhase;
+    [SerializeField] ScriptableObject playerSecondPhase;
+    [SerializeField] ScriptableObject playerSecondPhaseDamaged;
+    [SerializeField] ScriptableObject playerThirdPhase;
+    [SerializeField] ScriptableObject playerThirdPhaseDamaged;
 
 
 
@@ -19,6 +25,7 @@ public class InputController : MonoBehaviour
 
     void Start()
     {
+        
         cooldown = 0.05f;
         timerForNextAttack = cooldown;
     }
@@ -26,75 +33,100 @@ public class InputController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xMovement = Input.GetAxisRaw("Horizontal");
-        float yMovement = Input.GetAxisRaw("Vertical");
-        Player.ShipMovement(xMovement, yMovement);
+        
         
         ShootTier1();
-       
-
-        if (Player.IsTier2)
-        {
-            ShootTier2();
-        }
-
-        if (Player.IsTier3 && Player.IsTier2)
-        {
-            ShootTier3();
-        }
-       
+        ShootTier2();
+        ShootTier3();
         
+       
+       
 
     }
+
+    private void FixedUpdate()
+    {
+        float xMovement = Input.GetAxisRaw("Horizontal");
+        float yMovement = Input.GetAxisRaw("Vertical");
+        player.ShipMovement(xMovement, yMovement);
+    }
+
     private void ShootTier1()
     {
         if (Input.GetKey(KeyCode.Z))
         {
-            if (timerForNextAttack > 0)
-            {
-                timerForNextAttack -= Time.deltaTime;
-            }
-            else if (timerForNextAttack <= 0)
-            {
-                Gun.Shoot(new Bullet1());
-                timerForNextAttack = cooldown;
-            }
-                
-          
-
+            player.behaviourCurrent.Shoot(new Bullet1());
         }
-           
+               
     }
-
-    //private IEnumerator CoroutineAttack()
-    //{
-    //    while (Input.GetKeyDown(KeyCode.Z))
-    //    {
-            
-    //        Gun.Shoot(new Bullet1());
-    //        yield return new WaitForSeconds(0.5f);
-
-
-
-    //    }
-    //}
 
     private void ShootTier2()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (player.GetCurrentBehaviour() == typeof(PlayerSecondPhase) || player.GetCurrentBehaviour() == typeof(PlayerSecondPhaseDamaged))
         {
-            Gun.Shoot(new Bullet2());
+            if (Input.GetKey(KeyCode.Z))
+            {
+                player.behaviourCurrent.Shoot(new Bullet1());
+            }
 
+            if (Input.GetKey(KeyCode.X) && player.GetCurrentBehaviour() == typeof(PlayerSecondPhase))
+            {
+                player.behaviourCurrent.Shoot(new Bullet3());
+            }
+
+            if (Input.GetKey(KeyCode.X) && player.GetCurrentBehaviour() == typeof(PlayerSecondPhaseDamaged))
+            {
+               player.behaviourCurrent.Shoot(new Bullet2());
+            }
         }
+        
     }
+
+  
 
     private void ShootTier3()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (player.GetCurrentBehaviour() == typeof(PlayerThirdPhase) || player.GetCurrentBehaviour() == typeof(PlayerThirdPhaseDamage))
         {
-            Gun.Shoot(new Bullet3());
+            if (Input.GetKey(KeyCode.Z))
+            {
+                player.behaviourCurrent.Shoot(new Bullet1());
+            }
+
+            if (Input.GetKey(KeyCode.X))
+            {
+                player.behaviourCurrent.Shoot(new Bullet3());
+            }
+
+            if (Input.GetKey(KeyCode.C) && player.GetCurrentBehaviour() == typeof(PlayerThirdPhase))
+            {
+                player.behaviourCurrent.Shoot(new Bullet5());
+            }
+
+            if (Input.GetKey(KeyCode.C) && player.GetCurrentBehaviour() == typeof(PlayerThirdPhaseDamage))
+            {
+                player.behaviourCurrent.Shoot(new Bullet4());
+            }
+
         }
+            
     }
 
    
+
+    private IPlayerBehaviour GetBehaviour<T>() where T : IPlayerBehaviour
+    {
+        var type = typeof(T);
+        return (T)player.behavioursMap[type];
+    }
+
+
+
+
+
+
+
+
+
+
 }

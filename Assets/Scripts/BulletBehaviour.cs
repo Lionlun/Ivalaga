@@ -26,5 +26,16 @@ public class BulletBehaviour : MonoBehaviour
         transform.Rotate(new Vector3(0, 0, rotationValue));
     }
 
-   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            EnemyBaseClass enemy = collision.gameObject.GetComponentInParent<EnemyBaseClass>();
+            enemy.EnemyTakeDamage(10);
+
+            Debug.Log("Enemy damage taken");
+            Destroy(gameObject);
+        }
+       
+    }
 }

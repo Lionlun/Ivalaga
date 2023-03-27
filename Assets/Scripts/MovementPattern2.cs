@@ -2,27 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementPattern2 : MonoBehaviour
+public class MovementPattern2 : Movable
 {
-    Rigidbody2D rb;
+    //Rigidbody2D rb;
 
     Vector3 enemyLeapForce = new Vector3(20f, 0f, 0f);
     Vector3 enemySmallLeapForce = new Vector3(10f, 0f, 0f);
     Vector3 startDownMovement= new Vector3(0f, -20f, 0f);
 
 
+  
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        //rb = GetComponent<Rigidbody2D>();
 
-        StartCoroutine(MovementPattern());
+        StartCoroutine(EnemyMovementPattern());
     }
 
-    private IEnumerator MovementPattern()
+    public override IEnumerator EnemyMovementPattern()
     {
-        rb.AddForce(startDownMovement, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine(base.EnemyMovementPattern());
+
         while (true)
         {
             rb.velocity = Vector3.zero;

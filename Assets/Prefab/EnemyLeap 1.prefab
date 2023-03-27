@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1626732841466669272}
   - component: {fileID: 1626732841466669273}
+  - component: {fileID: 5954752550432816997}
   - component: {fileID: 1626732841466669271}
   - component: {fileID: 1626732841466669268}
-  - component: {fileID: 5954752550432816997}
   m_Layer: 6
   m_Name: EnemyLeap 1
   m_TagString: Untagged
@@ -55,6 +55,19 @@ MonoBehaviour:
   enemySpeed: 0
   enemyBullet: {fileID: 6642533538171067932, guid: 2eb34b0e074e1d744950b5ec26dd3e77, type: 3}
   shootingPoint: {fileID: 1626732843322705779}
+--- !u!114 &5954752550432816997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626732841466669269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 382ca7d2adb3308418317ac9a53b62d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 1626732841466669271}
 --- !u!50 &1626732841466669271
 Rigidbody2D:
   serializedVersion: 4
@@ -86,18 +99,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c19d6fe6395e6c240a536a24ff880c75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5954752550432816997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626732841466669269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 382ca7d2adb3308418317ac9a53b62d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1626732841881254324

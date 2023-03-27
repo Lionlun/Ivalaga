@@ -2,30 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirstEnemyMovement : EnemyBaseClass
+public class FirstEnemyMovement : Movable
 {
     #region spawnValues
     float spawnDownSpeed = 1f;
     #endregion
 
-    Rigidbody2D rb;
-   
+    //Rigidbody2D rb;
+    private float enemySpeed = 10f;
 
     float sinCenterY;
 
 
 
 
-    public FirstEnemyMovement()
-    {
-        
-        enemySpeed = 10f;
-    }
+    
   
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         
+        
+        //rb = GetComponent<Rigidbody2D>();
         StartCoroutine(EnemyMovementPattern());
         StartCoroutine(SineMovement());
        
@@ -48,10 +45,13 @@ public class FirstEnemyMovement : EnemyBaseClass
 
    
    
-    private IEnumerator EnemyMovementPattern()
+    public override IEnumerator EnemyMovementPattern()
     {
-        rb.AddForce(-transform.up * 2f, ForceMode2D.Impulse);
-        yield return new WaitForSeconds(2);
+        yield return StartCoroutine(base.EnemyMovementPattern());
+        
+
+      
+        
         //while (transform.position.y >= 6.35)
         //{
         //    rb.velocity = new Vector2(0, -enemySpeed);
@@ -107,13 +107,5 @@ public class FirstEnemyMovement : EnemyBaseClass
 
 
 
-    protected override void EnemyAttack(float damage)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void EnemyTakeDamage(float damage)
-    {
-        throw new System.NotImplementedException();
-    }
+    
 }
