@@ -22,7 +22,6 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
     public void Enter()
     {
         Debug.Log("Enter Second damaged phase");
-        //IsTier2Damaged = true;
         animator.SetBool("IsSecondDamaged", true);
         animator.SetBool("IsSecond", false);
     }
@@ -31,7 +30,6 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
     {
         animator.SetBool("IsSecondDamaged", false);
         Debug.Log("Exit Second damaged phase");
-        //IsTier2Damaged = false;
     }
 
     public void Update()

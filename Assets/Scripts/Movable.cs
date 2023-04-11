@@ -10,13 +10,11 @@ public abstract class Movable : MonoBehaviour
     Vector3 startDownMovement = new Vector3(0f, -10f, 0f);
     public float ObjectSpeed { get; set; }
 
-    private void Awake()
-    {
-        
-    }
-
-
-    public virtual IEnumerator EnemyMovementPattern()
+	private void Awake()
+	{
+		rb = GetComponent<Rigidbody2D>();
+	}
+	public virtual IEnumerator EnemyMovementPattern()
     {
         rb.AddForce(startDownMovement, ForceMode2D.Impulse);
         yield return new WaitForSeconds(2);

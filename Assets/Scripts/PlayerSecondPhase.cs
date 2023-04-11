@@ -9,10 +9,8 @@ public class PlayerSecondPhase : ScriptableObject, IPlayerBehaviour
 
     public Animator animator;
     public Player player;
+    public PlayerGun gun;
     Rigidbody2D rb;
-
-    public PlayerGun gun
-        ;
 
     float timerForNextAttack = 0.1f;
     float cooldown = 0.1f;
@@ -29,10 +27,6 @@ public class PlayerSecondPhase : ScriptableObject, IPlayerBehaviour
         animator.SetBool("IsFirst", false);
         animator.SetBool("IsSecondDamaged", false);
         animator.SetBool("IsThird", false);
-
-
-
-
     }
 
     public void Exit()
