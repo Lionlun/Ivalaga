@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerSecondPhaseDamaged", menuName = "ScriptableObjects/PlayerSecondPhaseDamaged", order = 1)]
@@ -10,11 +8,7 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
     public Player player;
     Rigidbody2D rb;
 
-    public PlayerGun gun
-        ;
-
-    float timerForNextAttack = 0.1f;
-    float cooldown = 0.1f;
+    public PlayerGun gun;
 
     public bool IsTier2 { get; private set; }
 
@@ -50,19 +44,8 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
 
     public void Shoot<T>(T bulletType) where T : IPlayerBullet
     {
-
-        if (timerForNextAttack > 0)
-        {
-            timerForNextAttack -= Time.deltaTime;
-        }
-        else if (timerForNextAttack <= 0)
-        {
-            gun.Shoot(bulletType);
-            timerForNextAttack = cooldown;
-        }
-
-
-    }
+		gun.Shoot(bulletType);
+	}
     public void Init(Animator animator, Rigidbody2D rb, Player player, PlayerGun gun)
     {
         this.animator = animator;

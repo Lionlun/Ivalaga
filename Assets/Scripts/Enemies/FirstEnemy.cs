@@ -18,20 +18,17 @@ public class FirstEnemy : EnemyBaseClass
         Cooldown = 1;
         TimerForNextAttack = Cooldown;
     }
-
-    
+        
     void Update()
     {
-        EnemyAttack(10);
+        EnemyAttack();
         if (enemyHealth <= 0)
         {
             EnemyDeath();
         }
     }
 
-    
-
-    protected override void EnemyAttack(float damage)
+    protected override void EnemyAttack()
     {
         if (TimerForNextAttack > 0)
         {
@@ -51,7 +48,7 @@ public class FirstEnemy : EnemyBaseClass
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        
+       
     }
 }
 

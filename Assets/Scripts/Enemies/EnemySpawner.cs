@@ -7,17 +7,22 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private EnemyBaseClass firstenemyPrefab;
     [SerializeField] private GameObject squadFirstEnemy;
     [SerializeField] private EnemyBaseClass boss;
-    //private EnemyBaseClass secondenemyPrefab;
-    private float firstEnemyInterval = 3.5f;
+    [SerializeField] private Octagon octagon;
+ 
+    private float firstEnemyInterval = 9f;
 
-    private float timeToSpawnBoss = 20f;
+    private float timeToSpawnBoss = 150f;
+    private float timeToSpawnOctagon = 75f;
     [SerializeField]private Transform spawnPosition;
+    private Vector2 octagonSpawn;
 
     void Start()
     {
+        octagonSpawn = new Vector2(20, Random.Range(14, 5));
         StartCoroutine(SpawnEnemy(firstEnemyInterval, firstenemyPrefab));
         StartCoroutine(SpawnBoss(timeToSpawnBoss, boss));
-    }
+		StartCoroutine(SpawnOctagon(timeToSpawnOctagon, octagon));
+	}
 
    private IEnumerator SpawnEnemy(float interval, EnemyBaseClass enemy)
     {
@@ -32,6 +37,11 @@ public class EnemySpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(interval);
         EnemyBaseClass newBoss = Instantiate(boss, spawnPosition.position, Quaternion.identity);
-
     }
+
+    private IEnumerator SpawnOctagon(float interval, Octagon octagon)
+    {
+        yield return new WaitForSeconds(interval);
+        Octagon newOctagon = Instantiate(octagon, octagonSpawn, Quaternion.identity);
+	}
 }

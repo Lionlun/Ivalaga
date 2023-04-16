@@ -10,9 +10,7 @@ public abstract class EnemyBaseClass : MonoBehaviour
     [SerializeField] protected float enemyHealth;
     [SerializeField] protected float enemySpeed;
     #endregion
-   
-
-  
+     
     void Update()
     {
         if (enemyHealth <= 0)
@@ -22,7 +20,7 @@ public abstract class EnemyBaseClass : MonoBehaviour
     }
 
   
-    protected abstract void EnemyAttack(float damage);
+    protected abstract void EnemyAttack();
 
     public abstract void EnemyTakeDamage(float damage);
 

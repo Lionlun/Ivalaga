@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     public IPlayerBehaviour behaviourCurrent;
 
     public Animator animator;
-    
 
     #region ship's properties
     [SerializeField] float shipSpeed = 1;
@@ -42,14 +41,10 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         this.InitBehaviours();
         SetBehaviourByDefault();
-        
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
         this.behaviourCurrent.Update();
         MaxPoints();
 
@@ -57,26 +52,58 @@ public class Player : MonoBehaviour
         {
             Death();
         }
-
-        
-
-
     }
 
     public void ShipMovement(float xMovement, float yMovement)
     {
-
         rb.AddForce(new Vector3(xMovement, yMovement, 0) * shipSpeed); 
-
     }
 
+	public void SetFirstPhase()
+	{
+		var behaviour = this.GetBehaviour<PlayerFirstPhase>();
+		this.SetBehaviour(behaviour);
+	}
 
-    private void Death()
+	public void SetSecondPhase()
+	{
+		var behaviour = this.GetBehaviour<PlayerSecondPhase>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public void SetSecondDamagedPhase()
+	{
+		var behaviour = this.GetBehaviour<PlayerSecondPhaseDamaged>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public void SetThirdPhase()
+	{
+		var behaviour = this.GetBehaviour<PlayerThirdPhase>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public void SetThirdDamagedPhase()
+	{
+		var behaviour = this.GetBehaviour<PlayerThirdPhaseDamage>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public Type GetCurrentBehaviour()
+	{
+		var currentBehaviour = behaviourCurrent.GetType();
+
+		return currentBehaviour;
+	}
+
+	public void TakePoints(int points)
+	{
+		Points -= points;
+	}
+
+	private void Death()
     {
-
-        //Debug.Log("PlayerDead");
         shipHealth = 0;
-
     }
 
     public void OwnDamage(int ownBulletDamage)
@@ -92,11 +119,8 @@ public class Player : MonoBehaviour
         {
             shipHealth = 100;
         }
-
     }
-
-   
-
+  
     void EnemyKilled()
     {
         Points += pointsToGet;
@@ -126,14 +150,14 @@ public class Player : MonoBehaviour
         this.behavioursMap[typeof(PlayerSecondPhaseDamaged)] = playerSecondPhaseDamaged;
         this.behavioursMap[typeof(PlayerThirdPhase)] = playerThirdPhase;
         this.behavioursMap[typeof(PlayerThirdPhaseDamage)] = playerThirdPhaseDamaged;
-
     }
 
     private void SetBehaviour(IPlayerBehaviour newBehaviour)
     {
         if (this.behaviourCurrent != null)
-            this.behaviourCurrent.Exit();
-        
+        {
+			this.behaviourCurrent.Exit();
+		}
 
         this.behaviourCurrent = newBehaviour;
         this.behaviourCurrent.Enter();
@@ -148,49 +172,6 @@ public class Player : MonoBehaviour
     private void SetBehaviourByDefault()
     {
         SetFirstPhase();
-    }
-
-    public void SetFirstPhase()
-    {
-        var behaviour = this.GetBehaviour<PlayerFirstPhase>();
-        this.SetBehaviour(behaviour);
-
-    }
-
-    public void SetSecondPhase()
-    {
-        var behaviour = this.GetBehaviour<PlayerSecondPhase>();
-        this.SetBehaviour(behaviour);
-    }
-
-    public void SetSecondDamagedPhase()
-    {
-        var behaviour = this.GetBehaviour<PlayerSecondPhaseDamaged>();
-        this.SetBehaviour(behaviour);
-    }
-
-    public void SetThirdPhase()
-    {
-        var behaviour = this.GetBehaviour<PlayerThirdPhase>();
-        this.SetBehaviour(behaviour);
-    }
-
-    public void SetThirdDamagedPhase()
-    {
-        var behaviour = this.GetBehaviour<PlayerThirdPhaseDamage>();
-        this.SetBehaviour(behaviour);
-    }
-
-    public Type GetCurrentBehaviour()
-    {
-        var currentBehaviour = behaviourCurrent.GetType();
-        
-        return currentBehaviour;
-    }
-
-    public void TakePoints(int points)
-    {
-        Points -= points;
     }
 
     private void MaxPoints()

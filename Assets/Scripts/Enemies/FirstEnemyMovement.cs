@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class FirstEnemyMovement : Movable
 {
-    #region spawnValues
-    float spawnDownSpeed = 1f;
-    #endregion
-
     private float enemySpeed = 10f;
 
     float sinCenterY;
-
-
 
     void Start()
     {
@@ -20,36 +14,15 @@ public class FirstEnemyMovement : Movable
         StartCoroutine(SineMovement());
     }
 
-    private bool IsFacingRight()
-    {
-        return transform.localScale.x > Mathf.Epsilon;
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Boundary"))
-        transform.localScale = new Vector2(-(Mathf.Sign(rb.velocity.x)), transform.localScale.y);
-    }
-   
     public override IEnumerator EnemyMovementPattern()
     {
         yield return StartCoroutine(base.EnemyMovementPattern());
 
         while(true)
         {
-            while (IsFacingRight())
-            {
+           rb.velocity = new Vector2(enemySpeed, 0);
 
-                rb.velocity = new Vector2(enemySpeed, 0);
-                yield return null;
-
-            }
-            while (!IsFacingRight())
-            {
-                rb.velocity = new Vector2(-enemySpeed, 0);
-                yield return null;
-
-            }
-            yield return null;
+           yield return null;
         }
     }
 
@@ -66,4 +39,12 @@ public class FirstEnemyMovement : Movable
             yield return null;
         }
     }
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.CompareTag("Boundary"))
+		{
+			enemySpeed = -enemySpeed;
+		}
+	}
 }

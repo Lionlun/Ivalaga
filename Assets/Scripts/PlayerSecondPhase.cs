@@ -12,9 +12,6 @@ public class PlayerSecondPhase : ScriptableObject, IPlayerBehaviour
     public PlayerGun gun;
     Rigidbody2D rb;
 
-    float timerForNextAttack = 0.1f;
-    float cooldown = 0.1f;
-
     public bool IsTier2 { get; private set; }
 
  
@@ -54,18 +51,7 @@ public class PlayerSecondPhase : ScriptableObject, IPlayerBehaviour
 
     public void Shoot<T>(T bulletType) where T : IPlayerBullet
     {
-        
-            if (timerForNextAttack > 0)
-            {
-                timerForNextAttack -= Time.deltaTime;
-            }
-            else if (timerForNextAttack <= 0)
-            {
-                gun.Shoot(bulletType);
-                timerForNextAttack = cooldown;
-            }
-
-
+        gun.Shoot(bulletType);
     }
     public void Init(Animator animator, Rigidbody2D rb, Player player, PlayerGun gun)
     {

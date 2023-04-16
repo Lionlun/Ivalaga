@@ -6,10 +6,6 @@ public class Obstacles : MonoBehaviour
 {
     [SerializeField] protected float obstacleHealth;
     [SerializeField] protected float obstacleSpeed;
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -18,7 +14,6 @@ public class Obstacles : MonoBehaviour
             ObstacleDeath();
         }
     }
-
 
     public void ObstacleTakeDamage(float damage)
     {
@@ -38,7 +33,6 @@ public class Obstacles : MonoBehaviour
             player.OwnDamage(10);
             player.TakePoints(10);
             Destroy(gameObject);
-        }
-       
+        } 
     }
 }

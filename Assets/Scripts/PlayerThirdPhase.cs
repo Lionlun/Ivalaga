@@ -7,16 +7,12 @@ public class PlayerThirdPhase :ScriptableObject, IPlayerBehaviour
 {
     public Animator animator;
     public Player player;
-    Rigidbody2D rb;
 
     public PlayerGun gun;
 
-    float timerForNextAttack = 0.1f;
-    float cooldown = 0.1f;
+    PlayerCompressedState playerCompressedState;
 
-    public bool IsTier3 { get; private set; }
-
-
+	public bool IsTier3 { get; private set; }
 
     public void Enter()
     {
@@ -26,7 +22,6 @@ public class PlayerThirdPhase :ScriptableObject, IPlayerBehaviour
         animator.SetBool("IsThird", true);
         animator.SetBool("IsSecond", false);
         animator.SetBool("IsThirdDamaged", false);
-
     }
 
     public void Exit()
@@ -46,24 +41,13 @@ public class PlayerThirdPhase :ScriptableObject, IPlayerBehaviour
 
     public void Shoot<T>(T bulletType) where T : IPlayerBullet
     {
-       
-            if (timerForNextAttack > 0)
-            {
-                timerForNextAttack -= Time.deltaTime;
-            }
-            else if (timerForNextAttack <= 0)
-            {
-                gun.Shoot(bulletType);
-                timerForNextAttack = cooldown;
-            }
+        gun.Shoot(bulletType);
+	}
 
-    }
     public void Init(Animator animator, Rigidbody2D rb, Player player, PlayerGun gun)
     {
         this.animator = animator;
-        this.rb = rb;
         this.player = player;
         this.gun = gun;
     }
-
 }

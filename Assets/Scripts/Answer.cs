@@ -74,7 +74,7 @@ public class Answer : MonoBehaviour
 
 	private void OnDestroy()
 	{
-        if (isCorrect)
+        if (isCorrect && particles != null)
         {
 			particles.transform.position = transform.position;
 			particles.Play();

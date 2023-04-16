@@ -12,9 +12,6 @@ public class PlayerThirdPhaseDamage : ScriptableObject, IPlayerBehaviour
 
     public PlayerGun gun;
 
-    float timerForNextAttack = 0.1f;
-    float cooldown = 0.1f;
-
     public bool IsTier3 { get; private set; }
 
 
@@ -22,17 +19,14 @@ public class PlayerThirdPhaseDamage : ScriptableObject, IPlayerBehaviour
     {
         Debug.Log("Enter Third damaged phase");
 
-        //IsTierDamaged3 = true;
         animator.SetBool("IsThirdDamaged", true);
         animator.SetBool("IsThird", false);
-
     }
 
     public void Exit()
     {
         Debug.Log("Exit Third damaged phase");
         animator.SetBool("IsThirdDamaged", false);
-        //IsTier3Damaged = false;
     }
 
     public void Update()
@@ -49,18 +43,8 @@ public class PlayerThirdPhaseDamage : ScriptableObject, IPlayerBehaviour
 
     public void Shoot<T>(T bulletType) where T : IPlayerBullet
     {
-
-        if (timerForNextAttack > 0)
-        {
-            timerForNextAttack -= Time.deltaTime;
-        }
-        else if (timerForNextAttack <= 0)
-        {
-            gun.Shoot(bulletType);
-            timerForNextAttack = cooldown;
-        }
-
-    }
+		gun.Shoot(bulletType);
+	}
     public void Init(Animator animator, Rigidbody2D rb, Player player, PlayerGun gun)
     {
         this.animator = animator;

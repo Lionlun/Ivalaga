@@ -7,12 +7,11 @@ public class BulletBehaviour : MonoBehaviour
     private float bulletSpeed = 12f;
     private float rotationValue;
     
-
     private void Start()
     {
         rotationValue = Random.Range(-2f, 2f);
     }
-    // Update is called once per frame
+
     void Update()
     {
         BulletMovement();
@@ -33,9 +32,7 @@ public class BulletBehaviour : MonoBehaviour
             EnemyBaseClass enemy = collision.gameObject.GetComponentInParent<EnemyBaseClass>();
             enemy.EnemyTakeDamage(10);
 
-            Debug.Log("Enemy damage taken");
             Destroy(gameObject);
         }
-       
     }
 }
