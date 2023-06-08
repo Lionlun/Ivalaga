@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4913663603808703965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.01, y: -0.1, z: 0}
-  m_LocalScale: {x: 0.24743423, y: 0.24743423, z: 0.24743423}
+  m_LocalPosition: {x: -0.03, y: -0.16, z: 0}
+  m_LocalScale: {x: 0.2783635, y: 0.27527058, z: 0.24743423}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4913663604448215420}
@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 4913663604448215411}
   - component: {fileID: 4913663604448215408}
   - component: {fileID: 6842390569607969117}
+  - component: {fileID: 6931325684715826621}
   m_Layer: 6
   m_Name: FirstEnemy
   m_TagString: Enemy
@@ -194,9 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: 100
-  enemySpeed: 0
   enemyBullet: {fileID: 6642533538171067932, guid: 2eb34b0e074e1d744950b5ec26dd3e77, type: 3}
   shootingPoint: {fileID: 4913663604672556759}
+  particlePrefab: {fileID: 3758103679550406982, guid: 533268c6dc708974fb8448b373aeede9, type: 3}
 --- !u!114 &4913663604448215410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +264,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6931325684715826621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4913663604448215409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c44749b7be991a4ea1c3b0fb255dbbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4913663604672556756
 GameObject:
   m_ObjectHideFlags: 0

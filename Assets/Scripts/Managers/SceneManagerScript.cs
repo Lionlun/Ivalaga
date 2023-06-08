@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerScript : MonoBehaviour
 {
-    private void Awake()
-    {
-        
-    }
     public void LoadScene(int sceneID)
     {
         SceneManager.LoadScene(sceneID);
     }
+    
 }

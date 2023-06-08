@@ -5,27 +5,15 @@ using UnityEngine;
 
 public abstract class EnemyBaseClass : MonoBehaviour
 {
-    #region EnemyPropert
-
-    [SerializeField] protected float enemyHealth;
-    [SerializeField] protected float enemySpeed;
-    #endregion
-     
-    void Update()
-    {
-        if (enemyHealth <= 0)
-        {
-            EnemyDeath();
-        }
-    }
-
+    [SerializeField] protected float EnemyHealth;
   
     protected abstract void EnemyAttack();
 
     public abstract void EnemyTakeDamage(float damage);
 
-    public void EnemyDeath()
+    public virtual void Die()
     {
         Destroy(gameObject);
     }
+
 }

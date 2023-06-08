@@ -30,7 +30,7 @@ public class Obstacles : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Player player = collision.gameObject.GetComponentInParent<Player>();
-            player.OwnDamage(10);
+            player.TakeDamage(10);
             player.TakePoints(10);
             Destroy(gameObject);
         } 

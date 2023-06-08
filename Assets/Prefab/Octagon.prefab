@@ -50,9 +50,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyHealth: 0
-  enemySpeed: 0
   bullet: {fileID: 1012279204203028763, guid: 21292481e0d2608499b448fdfa287d2b, type: 3}
   shootingPoint: {fileID: 5742813291666020698}
+  octagonBulletFormation: {fileID: 1012279204203028763, guid: 21292481e0d2608499b448fdfa287d2b, type: 3}
 --- !u!114 &5742813291540686691
 MonoBehaviour:
   m_ObjectHideFlags: 0

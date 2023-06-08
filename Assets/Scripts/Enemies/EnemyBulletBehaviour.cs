@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
 {
-    private float enemyBulletSpeed = 10f;
+    [SerializeField]private float enemyBulletSpeed = 10f;
+    [SerializeField] private float lifetime = 2;
 
     void Update()
     {
         BulletMovement();
-        Destroy(gameObject, 2);
+        Destroy(gameObject, lifetime);
     }
 
     void BulletMovement()
@@ -20,10 +21,9 @@ public class EnemyBulletBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Player player = collision.gameObject.GetComponentInParent<Player>();
-            player.OwnDamage(10);
-            player.TakePoints(10);
+            player.TakeDamage(10);
+            player.TakePoints(50);
 			Destroy(gameObject);
 		}
-       
     }
 }

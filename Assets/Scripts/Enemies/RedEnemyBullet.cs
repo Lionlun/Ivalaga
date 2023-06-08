@@ -9,8 +9,12 @@ public class RedEnemyBullet: MonoBehaviour
     private float force = 650f;
     private Vector3 direction= Vector3.zero;
 
+	private void Update()
+	{
+		Destroy(gameObject, 2);
+	}
 
-    void Start()
+	void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -18,5 +22,4 @@ public class RedEnemyBullet: MonoBehaviour
  
 		rb.AddForce(new Vector2(direction.x, direction.y).normalized * force);
 	}
-
 }

@@ -19,7 +19,4 @@ public class GlobalEvents : MonoBehaviour
     {
         OnEnemyKilled.Invoke();
     }
-
-   
-
 }

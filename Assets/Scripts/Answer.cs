@@ -19,7 +19,7 @@ public class Answer : MonoBehaviour
 
     void Start()
     {
-     particles= FindObjectOfType<ParticleSystem>();
+
 	}
 
     void Update()
@@ -74,11 +74,6 @@ public class Answer : MonoBehaviour
 
 	private void OnDestroy()
 	{
-        if (isCorrect && particles != null)
-        {
-			particles.transform.position = transform.position;
-			particles.Play();
-		}
 	}
 
 	private void Move()

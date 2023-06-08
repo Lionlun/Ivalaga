@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class FirstEnemy : EnemyBaseClass
 {
-    public FirstEnemy()
-    {
-        enemyHealth = 100f;
-    }
     [SerializeField] private EnemyBulletBehaviour enemyBullet;
     [SerializeField] private Transform shootingPoint;
+    [SerializeField] private ParticleSystem particlePrefab;
+    Animator animator;
 
     float TimerForNextAttack, Cooldown;
 
     void Start()
     {
+		EnemyHealth = 100f;
+		animator = GetComponent<Animator>();
         Cooldown = 1;
         TimerForNextAttack = Cooldown;
     }
@@ -22,9 +23,9 @@ public class FirstEnemy : EnemyBaseClass
     void Update()
     {
         EnemyAttack();
-        if (enemyHealth <= 0)
+        if (EnemyHealth <= 0)
         {
-            EnemyDeath();
+            Die();
         }
     }
 
@@ -36,20 +37,23 @@ public class FirstEnemy : EnemyBaseClass
         }
         else if (TimerForNextAttack <= 0)
         {
-            Instantiate(enemyBullet, shootingPoint.position, Quaternion.identity);
-            TimerForNextAttack = Cooldown;
+            animator.SetTrigger("Recoil");
+			Instantiate(enemyBullet, shootingPoint.position, Quaternion.identity);
+
+			TimerForNextAttack = Cooldown;
         }
     }
 
     public override void EnemyTakeDamage(float damage)
     {
-        enemyHealth -= damage;
+        EnemyHealth -= damage;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
-    {
-       
-    }
+	private void OnDestroy()
+	{
+        var particleEffect = Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        particleEffect.Play();
+	}
 }
 
    

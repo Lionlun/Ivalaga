@@ -14,7 +14,7 @@ public class FirstEnemyMovement : Movable
         StartCoroutine(SineMovement());
     }
 
-    public override IEnumerator EnemyMovementPattern()
+	public override IEnumerator EnemyMovementPattern()
     {
         yield return StartCoroutine(base.EnemyMovementPattern());
 

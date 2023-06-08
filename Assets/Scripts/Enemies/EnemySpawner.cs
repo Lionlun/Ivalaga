@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -8,22 +9,48 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject squadFirstEnemy;
     [SerializeField] private EnemyBaseClass boss;
     [SerializeField] private Octagon octagon;
+    [SerializeField] private GreatRay greatRay;
+    [SerializeField] private BlueEnemy blueEnemy;
+    [SerializeField] private Player player;
+    [SerializeField] private HorizontalProjectile horizontalProjectile;
+    
  
     private float firstEnemyInterval = 9f;
 
-    private float timeToSpawnBoss = 150f;
-    private float timeToSpawnOctagon = 75f;
+    private float timeToSpawnBoss = 150f; //150
+    private float timeToSpawnOctagon = 75f; //75
+    private float timeToSpawnGreatRay = 30f;
+    private float timeToSpawnHorizontalProjectile = 5f;
+    private float timeToSpawnBlueEnemy = 30f;
+
     [SerializeField]private Transform spawnPosition;
     private Vector2 octagonSpawn;
+    private Vector2 blueEnemySpawn = new Vector2(-16, 7);
+    private Vector2 horizontalProjectileSpawn;
+    private Vector2 bossSpawnPosition = new Vector2(0, 14);
 
     void Start()
     {
-        octagonSpawn = new Vector2(20, Random.Range(14, 5));
+		octagonSpawn = new Vector2(20, Random.Range(14, 5));
         StartCoroutine(SpawnEnemy(firstEnemyInterval, firstenemyPrefab));
         StartCoroutine(SpawnBoss(timeToSpawnBoss, boss));
 		StartCoroutine(SpawnOctagon(timeToSpawnOctagon, octagon));
+       // StartCoroutine(SpawnGreatRay(timeToSpawnGreatRay, greatRay));
+        StartCoroutine(SpawnBlueEnemy(timeToSpawnBlueEnemy, blueEnemy));
+        StartCoroutine(SpawnHorizontalProjectile(timeToSpawnHorizontalProjectile, horizontalProjectile));
 	}
-
+	private void OnEnable()
+	{
+		Boss.OnCreated += Disable;
+	}
+	private void OnDisable()
+	{
+		Boss.OnCreated -= Disable;
+	}
+	void Disable()
+    {
+        gameObject.SetActive(false);
+    }
    private IEnumerator SpawnEnemy(float interval, EnemyBaseClass enemy)
     {
         yield return new WaitForSeconds(interval);
@@ -36,12 +63,40 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnBoss(float interval, EnemyBaseClass boss)
     {
         yield return new WaitForSeconds(interval);
-        EnemyBaseClass newBoss = Instantiate(boss, spawnPosition.position, Quaternion.identity);
+        EnemyBaseClass newBoss = Instantiate(boss, bossSpawnPosition, Quaternion.identity);
     }
 
     private IEnumerator SpawnOctagon(float interval, Octagon octagon)
     {
         yield return new WaitForSeconds(interval);
         Octagon newOctagon = Instantiate(octagon, octagonSpawn, Quaternion.identity);
+	}
+
+    private IEnumerator SpawnGreatRay(float interval, GreatRay greatRay)
+    {
+		yield return new WaitForSeconds(interval);
+        GreatRay newGreatRay = Instantiate(greatRay, new Vector2(player.transform.position.x, 0), Quaternion.identity);
+        StartCoroutine(SpawnGreatRay(interval, greatRay));
+	}
+
+    private IEnumerator SpawnBlueEnemy(float interval, BlueEnemy blueEnemy)
+    {
+		yield return new WaitForSeconds(interval);
+        for (int i = 0; i <3; i++)
+        {
+            BlueEnemy newBlueEnemy = Instantiate(blueEnemy, blueEnemySpawn, Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+		}
+
+        StartCoroutine(SpawnBlueEnemy(interval, blueEnemy));
+	}
+
+    private IEnumerator SpawnHorizontalProjectile(float interval, HorizontalProjectile horizontalProjectile)
+    {
+		horizontalProjectileSpawn = new Vector2(-20, Random.Range(-6, 8));
+		yield return new WaitForSeconds(interval);
+		HorizontalProjectile newHorizontalProjectile = Instantiate(horizontalProjectile, horizontalProjectileSpawn, Quaternion.identity);
+		yield return new WaitForSeconds(0.5f);
+		StartCoroutine(SpawnHorizontalProjectile(interval, horizontalProjectile));
 	}
 }
