@@ -10,12 +10,14 @@ public class InputController : MonoBehaviour
     public Player player;
     public PlayerGun gun;
     public Animator animator;
+	[SerializeField] CharacterController2D characterController;
+	[SerializeField] PlayerShrinkage playerCompressed;
 
-    [SerializeField] Bullet1 bullet1;
-    [SerializeField] Bullet2 bullet2;
-    [SerializeField] Bullet3 bullet3;
-    [SerializeField] Bullet4 bullet4;
-    [SerializeField] Bullet5 bullet5;
+	[SerializeField] PlayerBullet bullet1;
+    [SerializeField] PlayerBullet bullet2;
+    [SerializeField] PlayerBullet bullet3;
+    [SerializeField] PlayerBullet bullet4;
+    [SerializeField] PlayerBullet bullet5;
 
 
     [SerializeField] ScriptableObject playerFirstPhase;
@@ -24,14 +26,21 @@ public class InputController : MonoBehaviour
     [SerializeField] ScriptableObject playerThirdPhase;
     [SerializeField] ScriptableObject playerThirdPhaseDamaged;
 
-    [SerializeField] CharacterController2D characterController;
-
-    [SerializeField] PlayerShrinkage playerCompressed;
-
 	private bool isCompressed;
     private bool zIsPressed;
     private bool xIsPressed;
     private bool cIsPressed;
+
+	private void Start()
+	{
+		playerBehaviour = FindObjectOfType<PlayerBehaviour>();
+        player = FindObjectOfType<Player>();
+		gun = FindObjectOfType<PlayerGun>();
+        animator = FindObjectOfType<Animator>();
+		characterController = FindObjectOfType<CharacterController2D>();
+		playerCompressed = FindObjectOfType<PlayerShrinkage>();
+
+	}
 
 	void Update()
     {
@@ -112,14 +121,13 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.P))
         {
-            player.Points += 20;
+            player.GetPoints();
         }
     }
     private void Shrink()
     {
 		if (Input.GetKey(KeyCode.LeftShift) && (playerBehaviour.GetCurrentBehaviour() == typeof(PlayerThirdPhase) || playerBehaviour.GetCurrentBehaviour() == typeof(PlayerSecondPhase)))
 		{
-			Debug.Log("Shrink");
 			playerCompressed.Shrink();
             isCompressed = true;
 		}

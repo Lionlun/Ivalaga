@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
-using System.Linq;
-using static UnityEditor.Rendering.FilterWindow;
-using System.Runtime.CompilerServices;
-using System;
+
 
 public class BossLittleEnemy : EnemyBaseClass
 {
-	public Boss Boss;
-	private Vector3 offset;
+	#region Attack
 	private float cooldown = 8f;
 	private float timerForNextAttack;
-
-	private float timeToTransform = 5f;
 	private float timerToStartAttack = 5f;
 	[SerializeField] Transform shootingPoint;
 	[SerializeField] EnemyBulletBehaviour enemyBullet;
+	#endregion
+
+	public Boss Boss;
+
+	private Vector3 offset;
+	
+	private float timeToTransform = 5f;
+	
 	[SerializeField] BossLittleEnemyTier2 littleEnemyTier2;
 	[SerializeField] ParticleSystem transformEffect;
 
@@ -30,11 +29,6 @@ public class BossLittleEnemy : EnemyBaseClass
 	void Update()
 	{
 		EnemyAttack();
-	
-		if (EnemyHealth <= 0)
-		{
-			Die();
-		}
 	}
 
 	private void OnEnable()
@@ -46,10 +40,7 @@ public class BossLittleEnemy : EnemyBaseClass
 	{
 		Boss.OnBossDestroyed -= Die;
 	}
-	public override void EnemyTakeDamage(float damage)
-	{
-		EnemyHealth -= damage;
-	}
+
 	public void SetOffset(Vector3 offset)
 	{
 		this.offset = offset;
@@ -69,7 +60,6 @@ public class BossLittleEnemy : EnemyBaseClass
 			}
 			else if (timerForNextAttack <= 0)
 			{
-				Debug.Log("LittleShoot");
 				Instantiate(enemyBullet, shootingPoint.position, Quaternion.identity);
 
 				timerForNextAttack = cooldown;

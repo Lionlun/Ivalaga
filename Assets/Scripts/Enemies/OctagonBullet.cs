@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OctagonBullet : MonoBehaviour
 {
-	public float angle;
+	public float Angle;
 
 	void Start()
     {
@@ -16,7 +14,8 @@ public class OctagonBullet : MonoBehaviour
 		if (collision.gameObject.tag == "Player")
 		{
 			Player player = collision.gameObject.GetComponentInParent<Player>();
-			player.TakeDamage(10);
+			Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+			playerHealth.TakeDamage(10);
 			player.TakePoints(20);
 			Destroy(gameObject);
 		}

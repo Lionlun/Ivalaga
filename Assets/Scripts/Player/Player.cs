@@ -1,91 +1,117 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public Animator animator;
+	#region ship's properties
+	private int currentHealth;
+	[SerializeField] private int maxHealth = 500;
+	#endregion
 
-    #region ship's properties
+	public Animator animator;
 
-    private int currentHealth;
-    [SerializeField] private int maxHealth = 500;
-    #endregion
+    public int Points = 0; //Возможно заменить на event
 
-    [SerializeField] private PlayerGun gun;
-    public Rigidbody2D rb { get; set; }
+	public static event Action<int> OnPlayerDeath;
 
-    public int Points = 0; //Возможно заменить на евент
+	[SerializeField] private PlayerGun gun;
 
-    private int pointsToGet = 100;
+	PlayerUI playerUI;
+	Points pointsUI;
+	HealthBar healthBar;
 
-    public HealthBar healthBar;
+	int pointsToGet = 100;
 
-    SceneManagerScript sceneManager;
+	CharacterController2D characterController;
 
-	private void Awake()
+	SpriteRenderer spriteRenderer;
+
+	Color32 damageColor = new Color32(255, 124, 124, 245);
+
+	void Awake()
     {
         GlobalEvents.OnEnemyKilled.AddListener(EnemyKilled);
-        GlobalEvents.OnEnemyKilled.AddListener(GetHealth);
-        GlobalEvents.OnHealthPackPickUp.AddListener(GetHealth);
+       // GlobalEvents.OnEnemyKilled.AddListener(GetHealth); TODO изменить, чтобы сочеталось с компонентом Health
     }
     void Start()
     {
-        currentHealth = maxHealth;
-		sceneManager = FindObjectOfType<SceneManagerScript>();
-
+		playerUI = GetComponentInChildren<PlayerUI>();
+		characterController = GetComponent<CharacterController2D>();
+		pointsUI = FindObjectOfType<Points>();
+		healthBar = FindObjectOfType<HealthBar>();
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		currentHealth = maxHealth;
 		healthBar.SetMaxHealth(currentHealth);
-		rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
         MaxPoints();
-
-        if (currentHealth <= 0)
-        {
-            Death();
-        }
     }
 
 	public void TakePoints(int points)
 	{
-		Points -= points;
+		if (!characterController.IsInvincible)
+		{
+			Points -= points;
+			pointsUI.SetPoints(Points);
+
+			if (Points < 0)
+			{
+				Points = 0;
+			}
+		}
+	}
+	public void GetPoints()
+	{
+		Points += pointsToGet;
+		pointsUI.SetPoints(Points);
+
+		if (Points > 1200)
+		{
+			Points = 1200;
+		}
+	}
+	public async void TakeDamage(int bulletDamage)
+	{
+		if (!characterController.IsInvincible)
+		{
+			spriteRenderer.color = damageColor;
+			currentHealth -= bulletDamage;
+			healthBar.SetHealth(currentHealth);
+			await Task.Delay(100);
+			spriteRenderer.color = Color.white;
+		}
 	}
 
-	private void Death()
-    {
-        currentHealth = 0;
-        sceneManager.LoadScene(0);
-		Destroy(gameObject);
-    }
-
-    public void TakeDamage(int ownBulletDamage)
-    {
-        currentHealth -= ownBulletDamage;
-        healthBar.SetHealth(currentHealth);
-    }
-
-    public void GetHealth()
-    {
-        currentHealth += 50;
-
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
+	public void TakeDamageFromOwnBullet(int ownBulletDamage)
+	{
+		currentHealth -= ownBulletDamage;
 		healthBar.SetHealth(currentHealth);
 	}
-  
-    void EnemyKilled()
-    {
-        Points += pointsToGet;
-    }
 
-    private void MaxPoints()
+	/*public void GetHealth()
+	{
+		health.GetHealth(50);
+		playerUI.PopUpHealthText();
+		healthBar.SetHealth(currentHealth);
+	}*/
+
+    void EnemyKilled() // TODO изменить
+    {
+        GetPoints();
+	}
+
+    void MaxPoints()
     {
         if (Points > 1300)
         {
             Points = 1200;
         }
     }
+
+	private void OnDestroy()
+	{
+		OnPlayerDeath?.Invoke(0);
+	}
 }

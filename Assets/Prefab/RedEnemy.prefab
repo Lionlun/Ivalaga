@@ -184,9 +184,9 @@ GameObject:
   - component: {fileID: 3990023992769659971}
   - component: {fileID: 3990023992769659970}
   - component: {fileID: 3990023992769659981}
+  - component: {fileID: 4961298485099891830}
   - component: {fileID: 3990023992769659980}
   - component: {fileID: 4487297447094209418}
-  - component: {fileID: 3990023992769659983}
   - component: {fileID: 93096650184915032}
   m_Layer: 6
   m_Name: RedEnemy
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4064751e4b1a8a4c8908f03509ef397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  EnemyHealth: 0
   enemyBullet: {fileID: 4805358476554609613, guid: 9dc86b45107d2b442a6c33a4c07c42be, type: 3}
   shootingPoint: {fileID: 3990023991203032040}
   particlePrefab: {fileID: 721173192899332140, guid: a400ee3216d26b14c9734c946fb70307, type: 3}
@@ -241,7 +241,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30594c74d9128d740b798bae641067f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 3990023992769659980}
+  Rigidbody: {fileID: 0}
+--- !u!114 &4961298485099891830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3990023992769659982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 100
 --- !u!50 &3990023992769659980
 Rigidbody2D:
   serializedVersion: 4
@@ -273,18 +287,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa4703612a3bc644bea9c97c20e2375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3990023992769659983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3990023992769659982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c19d6fe6395e6c240a536a24ff880c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &93096650184915032

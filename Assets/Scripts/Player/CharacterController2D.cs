@@ -6,13 +6,12 @@ public class CharacterController2D : MonoBehaviour
 	private AudioSource sound;
 	[SerializeField] private AudioClip dashSound;
 
-	Animator animator;
-
 	[SerializeField] float speed = 20;
 	[SerializeField] float acceleration;
 	[SerializeField] float deceleration;
 
 	[SerializeField] PlayerDashEffect dashEffect;
+	[SerializeField] DashBar dashBar;
 
 	private Vector2 velocity;
 
@@ -22,12 +21,11 @@ public class CharacterController2D : MonoBehaviour
 	private float dashCooldown = 0;
 	private float dashCooldownRefresh = 2f;
 
-	[SerializeField] DashBar dashBar;
+	public bool IsInvincible;
 
 	private void Awake()
 	{
 		dashCooldown = dashCooldownRefresh;
-		animator = GetComponent<Animator>();
 		dashBar.SetMaxValue(dashCooldownRefresh);
 		sound = GetComponent<AudioSource>();
 	}
@@ -35,7 +33,7 @@ public class CharacterController2D : MonoBehaviour
     {
 		Movement();
 
-		if (dashCooldown < dashCooldownRefresh) //сделать нормальный, читабельный кулдаун
+		if (dashCooldown < dashCooldownRefresh)
 		{
 			dashBar.gameObject.SetActive(true); //возможно переместить управление юай деша в другой класс
 			dashCooldown += Time.deltaTime;
@@ -62,10 +60,13 @@ public class CharacterController2D : MonoBehaviour
 
 			for (int i = 0; i < dashLength; i++)
 			{
+				IsInvincible = true;
 				Instantiate(dashEffect, transform.position, Quaternion.identity);
 				transform.position = Vector3.MoveTowards(transform.position, targetVector, dashSpeed * Time.deltaTime);
 				await Task.Yield();
 			}
+
+			IsInvincible = false;
 			dashCooldown = 0;
 		}
 	}

@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class EnemyBulletBehaviour : MonoBehaviour
 {
-    [SerializeField]private float enemyBulletSpeed = 10f;
+    [SerializeField] private float enemyBulletSpeed = 10f;
     [SerializeField] private float lifetime = 2;
 
-    void Update()
+	[SerializeField] ParticleSystem particleEffect;
+
+	void Update()
     {
         BulletMovement();
         Destroy(gameObject, lifetime);
@@ -21,8 +23,14 @@ public class EnemyBulletBehaviour : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Player player = collision.gameObject.GetComponentInParent<Player>();
-            player.TakeDamage(10);
+			Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+
+			playerHealth.TakeDamage(10);
             player.TakePoints(50);
+
+			var effect = Instantiate(particleEffect, transform.position, Quaternion.identity);
+			effect.Play();
+
 			Destroy(gameObject);
 		}
     }

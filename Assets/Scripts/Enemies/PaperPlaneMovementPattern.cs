@@ -1,6 +1,4 @@
-using ModestTree;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PaperPlaneMovementPattern : MonoBehaviour
@@ -15,10 +13,6 @@ public class PaperPlaneMovementPattern : MonoBehaviour
 
     private void Update()
     {
-       float verticalDirection = rb.velocity.y;
-
-        Vector2 movementDirection = new Vector2(rb.velocity.x, rb.velocity.y);
-
         Vector2 v = rb.velocity;
         var angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), 10f*Time.deltaTime);

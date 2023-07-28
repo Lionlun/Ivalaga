@@ -9,12 +9,9 @@ public class PlayerThirdPhaseDamage : ScriptableObject, IPlayerBehaviour
     public Animator animator;
     public PlayerBehaviour playerBehaviour;
 	public Player player;
-
     public PlayerGun gun;
 
-    public bool IsTier3 { get; private set; }
-
-	private int pointsToNextPhase = 1000;
+	private int pointsToNextPhase = 1200;
 	private int pointsToPreviousPhase = 800;
 
 	public void Enter()

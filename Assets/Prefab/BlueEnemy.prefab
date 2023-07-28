@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3417831796400075283}
   - component: {fileID: 3417831796400075282}
+  - component: {fileID: 2011146812740674926}
+  - component: {fileID: 1033281243380168907}
   - component: {fileID: 3417831796400075286}
   - component: {fileID: 3417831796400075285}
   m_Layer: 0
@@ -51,6 +53,33 @@ MonoBehaviour:
   EnemyHealth: 0
   redEnemyBulet: {fileID: 3112235519025230206, guid: 9dc86b45107d2b442a6c33a4c07c42be, type: 3}
   shootingPoint: {fileID: 3417831797064306791}
+--- !u!114 &2011146812740674926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417831796400075284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e596c4447ce95d744a080910e04c18c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Direction: {x: 0, y: 0, z: 0}
+--- !u!114 &1033281243380168907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417831796400075284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 120
 --- !u!50 &3417831796400075286
 Rigidbody2D:
   serializedVersion: 4

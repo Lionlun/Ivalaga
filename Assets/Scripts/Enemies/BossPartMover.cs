@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -13,42 +12,32 @@ public class BossPartMover : MonoBehaviour
 
 	BossPartPositionSetter positionSetter;
 
-	public bool isCircle;
-	public bool isInitial;
+	public bool IsCircle;
+	public bool IsInitial;
+	public bool IsStopped;
 
 	void Start()
     {
 		positionSetter = new BossPartPositionSetter();
 		boss = FindObjectOfType<Boss>();
 		bossParts = boss.BossParts;
-
-		StartCoroutine(CycleBoss());
 	}
 
 	private void Update()
 	{
-	if (isCircle)
+	if (IsCircle)
 		{
 			MoveToCircleVectors();
-			isCircle = false;
+			IsCircle = false;
 		}
-		if (isInitial)
+		if (IsInitial)
 		{
 			MoveToInitialVectors();
-			isInitial= false;
+			IsInitial= false;
 		}
 	}
 
-	private void OnEnable()
-	{
-		Boss.OnBossDestroyed += StopCoroutineOnDestroy;
-	}
-	private void OnDisable()
-	{
-		Boss.OnBossDestroyed -= StopCoroutineOnDestroy;
-	}
-
-	private void MoveToInitialVectors()
+	public void MoveToInitialVectors()
 	{
 		initialVectors = positionSetter.SetInitialVectors(boss.transform.position);
 
@@ -58,7 +47,7 @@ public class BossPartMover : MonoBehaviour
 		}
 		MoveToInitial();
 	}
-	private void MoveToCircleVectors()
+	public void MoveToCircleVectors()
     {
 		circlevectors = positionSetter.SetCircleVectors(boss.transform.position);
 
@@ -68,7 +57,7 @@ public class BossPartMover : MonoBehaviour
 		}
 		MoveToCircle();
 	}
-	private void MoveToCenterVectors()
+	public void MoveToCenterVectors()
 	{
 		centervectors = positionSetter.SetCenterVectors(boss.transform.position);
 
@@ -81,7 +70,7 @@ public class BossPartMover : MonoBehaviour
 
 	private async void MoveToCircle()
 	{
-		boss.Stop();
+		IsStopped = true;
 		var tasks = new Task[bossParts.Count];
 
 		for (int i = 0; i < bossParts.Count; i++)
@@ -89,12 +78,12 @@ public class BossPartMover : MonoBehaviour
 			tasks[i] = bossParts[i].MovePartsToCircle();
 		}
 		await Task.WhenAll(tasks);
-		boss.StartMove();
+		IsStopped = false;
 	}
 	
 	private async void MoveToInitial()
 	{
-		boss.Stop();
+		IsStopped = true;
 		var tasks = new Task[bossParts.Count];
 
 		for (int i = 0; i < bossParts.Count; i++)
@@ -102,12 +91,12 @@ public class BossPartMover : MonoBehaviour
 			tasks[i] = bossParts[i].MovePartsToInitial(initialVectors[i]);
 		}
 		await Task.WhenAll(tasks);
-		boss.StartMove();
+		IsStopped = false;
 	}
 
 	private async void MoveToCenter()
 	{
-		boss.Stop();
+		IsStopped = true;
 		var tasks = new Task[bossParts.Count];
 
 		for (int i = 0; i < bossParts.Count; i++)
@@ -115,28 +104,6 @@ public class BossPartMover : MonoBehaviour
 			tasks[i] = bossParts[i].MovePartsToCenter(centervectors[i]);
 		}
 		await Task.WhenAll(tasks);
-		boss.StartMove();
-	}
-
-	private IEnumerator CycleBoss() //Это должно быть в другом классе
-	{
-		yield return new WaitForSeconds(5);
-		MoveToCircleVectors();
-		boss.SetBehaviourCircle();
-		
-		yield return new WaitForSeconds(19);
-		MoveToCenterVectors();
-		boss.SetBehaviourCenter();
-
-		yield return new WaitForSeconds(5);
-		MoveToInitialVectors();
-		boss.SetBehaviourInitial();
-		yield return null;
-		StartCoroutine(CycleBoss());
-	}
-
-	private void StopCoroutineOnDestroy()
-	{
-		StopAllCoroutines();
+		IsStopped = false;
 	}
 }

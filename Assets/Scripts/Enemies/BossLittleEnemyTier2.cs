@@ -1,16 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossLittleEnemyTier2 : EnemyBaseClass
 {
-	public Boss Boss;
-	private Vector3 offset;
+	#region Attack
 	private float timerForNextAttack;
 	private float cooldown = 3f;
 	[SerializeField] EnemyBulletBehaviour enemyBullet;
 	[SerializeField] Transform shootingPoint;
-	
+	#endregion
+
+	public Boss Boss;
+	private Vector3 offset;
+
+	private void OnEnable()
+	{
+		Boss.OnBossDestroyed += Die;
+	}
+
+	private void OnDisable()
+	{
+		Boss.OnBossDestroyed -= Die;
+	}
+
 	void Start()
 	{
 		timerForNextAttack = cooldown;
@@ -19,15 +30,12 @@ public class BossLittleEnemyTier2 : EnemyBaseClass
 	void Update()
 	{
 		EnemyAttack();
-		if (EnemyHealth<= 0) 
-		{
-			Die();
-		}
 		Move();
 	}
-	public override void EnemyTakeDamage(float damage)
+
+	public void SetOffset(Vector3 offset)
 	{
-		EnemyHealth -= damage;
+		this.offset = offset;
 	}
 
 	protected override void EnemyAttack()
@@ -43,7 +51,8 @@ public class BossLittleEnemyTier2 : EnemyBaseClass
 			timerForNextAttack = cooldown;
 		}
 	}
-	private void Move()
+
+	void Move()
 	{
 		if (Boss != null)
 		{
@@ -52,21 +61,13 @@ public class BossLittleEnemyTier2 : EnemyBaseClass
 		}
 	}
 
-	public void SetOffset(Vector3 offset)
+	void OnTriggerStay2D(Collider2D collision)
 	{
-		this.offset = offset;
-	}
-
-	private void OnTriggerStay2D(Collider2D collision)
-	{
-
 		if (collision.GetComponentInParent<CharacterController2D>())
 		{
-			Debug.Log("PLAYER PUSHED");
 			var player = collision.GetComponentInParent<CharacterController2D>();
 			var pushBackVector = transform.position - player.transform.position;
 			player.transform.position = Vector3.MoveTowards(player.transform.position, pushBackVector * 2, 0.1f);
 		}
 	}
-
 }

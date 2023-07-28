@@ -125,11 +125,11 @@ GameObject:
   m_Component:
   - component: {fileID: 647070263283022930}
   - component: {fileID: 7455705123756407364}
+  - component: {fileID: 5332415165176271544}
   - component: {fileID: 5030433471976082464}
   - component: {fileID: 1011657296867047591}
   - component: {fileID: 4416020547975516661}
   - component: {fileID: 3627751028403256424}
-  - component: {fileID: 2874292861748728232}
   m_Layer: 0
   m_Name: BossLittleEnemy
   m_TagString: Enemy
@@ -166,12 +166,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f3f7497aee27249b1cbdf6ec6a2cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 80
-  Boss: {fileID: 0}
+  EnemyHealth: 80
   shootingPoint: {fileID: 5932488690002075627}
   enemyBullet: {fileID: 2654805609302603067, guid: e117b761a8bfec4418b75a0d82814ce1, type: 3}
+  Boss: {fileID: 0}
   littleEnemyTier2: {fileID: 1737341964312614172, guid: 6127426453cc11f4a8b642fa6a030527, type: 3}
   transformEffect: {fileID: 721173192899332140, guid: a400ee3216d26b14c9734c946fb70307, type: 3}
+--- !u!114 &5332415165176271544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7846887410560380873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 80
 --- !u!114 &5030433471976082464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,17 +255,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e26aa904aa726d40bd739e3c0dba40d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2874292861748728232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7846887410560380873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c19d6fe6395e6c240a536a24ff880c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

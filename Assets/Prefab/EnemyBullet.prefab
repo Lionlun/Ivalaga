@@ -107,6 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletSpeed: 10
   lifetime: 2
+  particleEffect: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
 --- !u!50 &6642533538171067934
 Rigidbody2D:
   serializedVersion: 4
@@ -121,7 +122,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0

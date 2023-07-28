@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerBulletBase : MonoBehaviour
 {
-    private float bulletSpeed = 15f;
-    private float rotationValue;
+	[SerializeField] public int BulletOwnDamage;
+	[SerializeField] protected ParticleSystem ParticleEffectPrefab;
 
-	[SerializeField] protected ParticleSystem particleEffectPrefab;
-	[SerializeField] public float timerForNextAttack = 0.1f;
-	[SerializeField] public float cooldown = 0.1f;
-	public int BulletOwnDamage { get; protected set; }
- 
-	private void Start()
+	private float bulletSpeed = 15f;
+    private float rotationValue;
+	
+ 	private void Start()
     {
 		rotationValue = Random.Range(-2f, 2f);	
 	}

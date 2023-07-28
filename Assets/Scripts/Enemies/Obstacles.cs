@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
-    [SerializeField] protected float obstacleHealth;
-    [SerializeField] protected float obstacleSpeed;
+    [SerializeField] protected float ObstacleHealth;
+    [SerializeField] protected float ObstacleSpeed;
 
     void Update()
     {
-        if (obstacleHealth <= 0)
+        if (ObstacleHealth <= 0)
         {
             ObstacleDeath();
         }
@@ -17,7 +15,7 @@ public class Obstacles : MonoBehaviour
 
     public void ObstacleTakeDamage(float damage)
     {
-        obstacleHealth -= damage;
+        ObstacleHealth -= damage;
     }
 
     public void ObstacleDeath()
@@ -30,7 +28,8 @@ public class Obstacles : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Player player = collision.gameObject.GetComponentInParent<Player>();
-            player.TakeDamage(10);
+			Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+			playerHealth.TakeDamage(10);
             player.TakePoints(10);
             Destroy(gameObject);
         } 

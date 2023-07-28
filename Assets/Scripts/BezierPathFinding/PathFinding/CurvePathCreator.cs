@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CurvePathCreator : MonoBehaviour
 {
-	[HideInInspector] public CurvePath curvePath;
+	[HideInInspector] public CurvePath CurvePath;
 
 	public void CreatePath()
 	{
-		curvePath = new CurvePath();
+		CurvePath = new CurvePath();
 	}
 }

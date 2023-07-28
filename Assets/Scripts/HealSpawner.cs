@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class HealSpawner : MonoBehaviour
@@ -12,7 +10,8 @@ public class HealSpawner : MonoBehaviour
 
 	[SerializeField] float minTras;
     [SerializeField] float maxTras;
-	private bool isBossSpawned;
+
+	bool isBossSpawned;
 
 	void Start()
     {
@@ -30,26 +29,7 @@ public class HealSpawner : MonoBehaviour
 		Boss.OnCreated -= SetBossTrue;
 		Boss.OnCreated -= SpawnHealOnBoss;
 	}
-	IEnumerator HealthSpawn()
-    {
-        while (!isBossSpawned)
-        {
-            var wanted = Random.Range(minTras, maxTras);
-            var position = new Vector3(wanted, transform.position.y);
-            GameObject gameObject = Instantiate(healthPrefab, position, Quaternion.identity);
-            yield return new WaitForSeconds(secondSpawn);
-            Destroy(gameObject, 10f);
-        }
-        while (isBossSpawned)
-        {
-			var wanted = Random.Range(minTras, maxTras);
-			var position = new Vector3(wanted, transform.position.y);
-			GameObject gameObject = Instantiate(healthPrefab, position, Quaternion.identity);
-			yield return new WaitForSeconds(secondSpawnDuringBoss);
-			Destroy(gameObject, 10f);
-		}   
-    }
-
+	
     public void SetBossTrue()
     {
         isBossSpawned = true;
@@ -65,4 +45,24 @@ public class HealSpawner : MonoBehaviour
 			Destroy(gameObject, 10f);
 		}
     }
+
+	IEnumerator HealthSpawn()
+	{
+		while (!isBossSpawned)
+		{
+			var wanted = Random.Range(minTras, maxTras);
+			var position = new Vector3(wanted, transform.position.y);
+			GameObject gameObject = Instantiate(healthPrefab, position, Quaternion.identity);
+			yield return new WaitForSeconds(secondSpawn);
+			Destroy(gameObject, 10f);
+		}
+		while (isBossSpawned)
+		{
+			var wanted = Random.Range(minTras, maxTras);
+			var position = new Vector3(wanted, transform.position.y);
+			GameObject gameObject = Instantiate(healthPrefab, position, Quaternion.identity);
+			yield return new WaitForSeconds(secondSpawnDuringBoss);
+			Destroy(gameObject, 10f);
+		}
+	}
 }

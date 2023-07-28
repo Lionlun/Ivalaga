@@ -2,72 +2,85 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-
-public class Boss : EnemyBaseClass
+public class Boss : MonoBehaviour
 {
-	public bool IsMovingRight { get; set; } = true;
-	public bool IsMovingLeft { get; set; }
-
 	public List<BossPart> BossParts = new List<BossPart>();
 
 	public static event Action OnCreated;
 
 	public static event Action OnBossDestroyed;
 
-	private bool isStopped;
-	private float startSpeed = 0.1f;
-    
+	[HideInInspector] public IBossBehaviour currentBehaviour;
+
 	[SerializeField] Transform shootingPoint;
 	[SerializeField] EnemyBulletBehaviour enemyBullet;
 	[SerializeField] BossRay bossRay;
 	[SerializeField] ParticleSystem teleportEffectPrefab;
-
+	[SerializeField] BossPartMover bossPartMover;
 	private Dictionary<Type, IBossBehaviour> behavioursMap;
-	private IBossBehaviour currentBehaviour;
+
+	private BossMover bossMover;
+
+	[SerializeField] ParticleSystem shootEffect;
 
 	private async void Start()
 	{
-		await FirstMovement();
 		OnCreated?.Invoke();
+		bossMover = GetComponent<BossMover>();
+		await bossMover.FirstMovement();
+		
 		this.InitBehaviours();
 		SetBehaviourByDefault();
+		StartCoroutine(CycleBoss());
 	}
 	private void Update()
 	{
-		EnemyAttack();
-
-		
+		if (currentBehaviour!= null)
+		{
+			currentBehaviour.Update();
+		}
+	
 		if (CheckDeath())
 		{
 			Die();
 		}
-		SetDirection();
-
-		if (this.currentBehaviour != null)
-		{
-			this.currentBehaviour.Update();
-		}
 	}
 
-	public override void Die()
+	private void Die()
 	{
 		OnBossDestroyed?.Invoke();
-		base.Die();
+		Destroy(gameObject);
 	}
+	
+	public void SetBehaviourInitial()
+	{
+		var behaviour = this.GetBehaviour<BossInitialBehaviour>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public void SetBehaviourCircle()
+	{
+		var behaviour = this.GetBehaviour<BossDiamondBehaviour>();
+		this.SetBehaviour(behaviour);
+	}
+
+	public void SetBehaviourCenter()
+	{
+		var behaviour = this.GetBehaviour<BossCenterBehaviour>();
+		this.SetBehaviour(behaviour);
+	}
+
 	private void InitBehaviours()
 	{
 		behavioursMap = new Dictionary<Type, IBossBehaviour>();
 
 		BossInitialBehaviour bossInitialBehaviour = ScriptableObject.CreateInstance<BossInitialBehaviour>();
-		bossInitialBehaviour.Init(this, enemyBullet, shootingPoint);
+		bossInitialBehaviour.Init(this, bossMover, enemyBullet, shootingPoint, shootEffect);
 
-		BossDiamondBehaviour bossCircleBehaviour= ScriptableObject.CreateInstance<BossDiamondBehaviour>();
-		bossCircleBehaviour.Init(this, bossRay, shootingPoint, teleportEffectPrefab);
+		BossDiamondBehaviour bossCircleBehaviour = ScriptableObject.CreateInstance<BossDiamondBehaviour>();
+		bossCircleBehaviour.Init(this, bossMover, bossRay, shootingPoint, teleportEffectPrefab);
 
 		BossCenterBehaviour bossCenterBehaviour = ScriptableObject.CreateInstance<BossCenterBehaviour>();
 		bossCenterBehaviour.Init(this, enemyBullet, shootingPoint, teleportEffectPrefab);
@@ -98,92 +111,25 @@ public class Boss : EnemyBaseClass
 		this.SetBehaviourInitial();
 	}
 
-	public void SetBehaviourInitial()
-	{
-		var behaviour = this.GetBehaviour<BossInitialBehaviour>();
-		this.SetBehaviour(behaviour);
-	}
-
-	public void SetBehaviourCircle()
-	{
-		var behaviour = this.GetBehaviour<BossDiamondBehaviour>();
-		this.SetBehaviour(behaviour);
-	}
-
-	public void SetBehaviourCenter()
-	{
-		var behaviour = this.GetBehaviour<BossCenterBehaviour>();
-		this.SetBehaviour(behaviour);
-	}
-
-	private void FixedUpdate()
-	{
-		if(!isStopped)
-		{
-			Move();
-		}
-	}
-
-	public override void EnemyTakeDamage(float damage)
-	{
-		EnemyHealth -= damage;
-	}
-	public void Stop()
-	{
-		isStopped = true;
-	}
-	public void StartMove()
-	{
-		isStopped = false;
-	}
-	protected override void EnemyAttack()
-	{
-		if (currentBehaviour!= null)
-		{
-			currentBehaviour.Attack();
-		}
-	}
-	private void SetDirection()
-	{
-		if (transform.position.x < -15)
-		{
-			IsMovingRight = true;
-			IsMovingLeft = false;
-		}
-		if (transform.position.x > 13)
-		{
-			IsMovingRight = false;
-			IsMovingLeft = true;
-		}
-	}
-
-	private void Move()
-	{
-		if (currentBehaviour != null)
-		{
-			currentBehaviour.Move();
-		}
-	}
-
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.CompareTag("Projectile"))
-		{
-			Debug.Log("Boss Hit");
-		}
-	}
-
 	private bool CheckDeath()
 	{
-		return BossParts.All(x => x.isDestroyed == true);
+		return BossParts.All(x => x.IsDestroyed == true);
 	}
 
-	private async Task FirstMovement()
+	private IEnumerator CycleBoss()
 	{
-		while (transform.position.y > 8)
-		{
-			transform.Translate(Vector3.down*startSpeed);
-			await Task.Delay(20);
-		}
+		yield return new WaitForSeconds(5);
+		bossPartMover.MoveToCircleVectors();
+		SetBehaviourCircle();
+
+		yield return new WaitForSeconds(19);
+		bossPartMover.MoveToCenterVectors();
+		SetBehaviourCenter();
+
+		yield return new WaitForSeconds(5);
+		bossPartMover.MoveToInitialVectors();
+		SetBehaviourInitial();
+		yield return null;
+		StartCoroutine(CycleBoss());
 	}
 }

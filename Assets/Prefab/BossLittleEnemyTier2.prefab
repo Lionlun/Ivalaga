@@ -127,8 +127,8 @@ GameObject:
   - component: {fileID: 928480401342792610}
   - component: {fileID: 4316869239039862584}
   - component: {fileID: 1737341964312614172}
+  - component: {fileID: 5867139748512009808}
   - component: {fileID: 2421475095724005744}
-  - component: {fileID: 7103515816417958705}
   m_Layer: 0
   m_Name: BossLittleEnemyTier2
   m_TagString: Enemy
@@ -212,10 +212,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51693eaf459a6d14dad206a43ccce15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 120
-  Boss: {fileID: 0}
+  EnemyHealth: 120
   enemyBullet: {fileID: 6642533538171067932, guid: 2eb34b0e074e1d744950b5ec26dd3e77, type: 3}
   shootingPoint: {fileID: 1879553430859835562}
+  Boss: {fileID: 0}
+--- !u!114 &5867139748512009808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415104743648440406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 120
 --- !u!114 &2421475095724005744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,18 +240,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e26aa904aa726d40bd739e3c0dba40d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  oscillationForce: 0
---- !u!114 &7103515816417958705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6415104743648440406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c19d6fe6395e6c240a536a24ff880c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

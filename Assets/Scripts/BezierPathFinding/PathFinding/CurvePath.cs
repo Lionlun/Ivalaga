@@ -1,17 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 
 [ExecuteAlways]
 public class CurvePath : MonoBehaviour
 {
-	[SerializeField, HideInInspector] public List<Vector2> points;
+	public bool IsGenerated;
 	bool isClosed;
 	[SerializeField] float interval = 1;
-	public bool isGenerated;
+	[SerializeField, HideInInspector] public List<Vector2> points;
 
 	public int NumPoints
 	{
@@ -19,10 +16,7 @@ public class CurvePath : MonoBehaviour
 	}
 	public int NumSegments
 	{
-		get
-		{
-			return points.Count / 3;
-		}
+		get { return points.Count / 3;}
 	}
 	public Vector2 this[int i]
 	{
@@ -31,47 +25,14 @@ public class CurvePath : MonoBehaviour
 
 	public async void Start()
 	{
-		isGenerated= false;
+		IsGenerated= false;
 		CreateStartPoints(transform.position);
-		await GenerateCurve();
+		CurvePathGenerator curvePathGenerator = new CurvePathGenerator();
+		curvePathGenerator.Init(this, interval, points);
+		await curvePathGenerator.GenerateCurve();
+		IsGenerated = true;
 	}
 
-	private async Task GenerateCurve()
-	{
-		var lastPoint = points[points.Count - 1] + (Vector2.right) * interval;
-		while (lastPoint.x <= 10)
-		{
-			lastPoint = points[points.Count - 1] + (Vector2.right) * interval;
-			AddSegmentHorizontal(lastPoint, Vector2.right);
-			
-		}
-		AddTurnSegment(lastPoint, Vector2.down);
-		while (lastPoint.y >= -2)
-		{
-			lastPoint = points[points.Count - 1] + (Vector2.down) * interval;
-			AddSegmentVertical(lastPoint, Vector2.down);
-		}
-	
-		AddTurnSegment(lastPoint, Vector2.left);
-
-		while ((lastPoint.x > -11))
-		{
-			lastPoint = points[points.Count - 1] + (Vector2.left) * interval;
-			AddSegmentHorizontal(lastPoint, Vector2.left);
-		}
-		AddTurnSegment(lastPoint, Vector2.up);
-		while (lastPoint.y < 2)
-		{
-			lastPoint = points[points.Count - 1] + (Vector2.up) * interval;
-			AddSegmentVertical(lastPoint, Vector2.up);
-			await Task.Delay(200);
-		}
-		AddTurnSegment(lastPoint, Vector2.right);
-		ToggleClosed();
-		isGenerated = true;
-		await Task.Delay(200);
-
-	} 
 	public void CreateStartPoints(Vector2 startPosition)
 	{
 		points = new List<Vector2>()
@@ -82,7 +43,7 @@ public class CurvePath : MonoBehaviour
 			startPosition + (Vector2.right)*interval,
 		};
 	}
-	public void AddSegmentHorizontal(Vector2 anchorPos, Vector2 direction)
+	public void AddHorizontalSegment(Vector2 anchorPos, Vector2 direction)
 	{
 		points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
 		points.Add(new Vector2(anchorPos.x, anchorPos.y-2));
@@ -93,7 +54,7 @@ public class CurvePath : MonoBehaviour
 		points.Add(anchorPos + (direction*2));
 	}
 
-	public void AddSegmentVertical(Vector2 anchorPos, Vector2 direction)
+	public void AddVerticalSegment(Vector2 anchorPos, Vector2 direction)
 	{
 		points.Add(points[points.Count - 1] * 2 - points[points.Count - 2]);
 		points.Add(new Vector2(anchorPos.x-2, anchorPos.y));
@@ -140,46 +101,6 @@ public class CurvePath : MonoBehaviour
 		};
 	}
 
-	int LoopIndex(int i)
-	{
-		return (i + points.Count) % points.Count;
-	}
-
-
-	public Vector2[] CalculateEvenlySpacedPoints(float spacing, float resolution = 1)
-	{
-		List<Vector2> evenlySpacedPoints = new List<Vector2>();
-		evenlySpacedPoints.Add(points[0]);
-		Vector2 previousPoint = points[0];
-		float dstSinceLastEvenPoint = 0;
-
-		for (int segmentIndex = 0; segmentIndex < NumSegments; segmentIndex++)
-		{
-			Vector2[] p = GetPointsInSegments(segmentIndex);
-			float controlNetLength = Vector2.Distance(p[0], p[1]) + Vector2.Distance(p[1], p[2]) + Vector2.Distance(p[2], p[3]);
-			float estimatedCurveLength = Vector2.Distance(p[0], p[3]) + controlNetLength / 2f;
-			int divisions = Mathf.CeilToInt(estimatedCurveLength * resolution * 10);
-			float t = 0;
-			while (t <= 1)
-			{
-				t += 1f / divisions;
-				Vector2 pointOnCurve = Bezier.EvaluateCubic(p[0], p[1], p[2], p[3], t);
-				dstSinceLastEvenPoint += Vector2.Distance(previousPoint, pointOnCurve);
-
-				while (dstSinceLastEvenPoint >= spacing)
-				{
-					float overshootDst = dstSinceLastEvenPoint - spacing;
-					Vector2 newEvenlySpacedPoint = pointOnCurve + (previousPoint - pointOnCurve).normalized * overshootDst;
-					evenlySpacedPoints.Add(newEvenlySpacedPoint);
-					dstSinceLastEvenPoint = overshootDst;
-					previousPoint = newEvenlySpacedPoint;
-				}
-				previousPoint = pointOnCurve;
-			}
-		}
-		return evenlySpacedPoints.ToArray();
-	}
-
 	public void ToggleClosed()
 	{
 		isClosed = !isClosed;
@@ -192,5 +113,10 @@ public class CurvePath : MonoBehaviour
 		{
 			points.RemoveRange(points.Count - 2, 2);
 		}
+	}
+
+	int LoopIndex(int i)
+	{
+		return (i + points.Count) % points.Count;
 	}
 }

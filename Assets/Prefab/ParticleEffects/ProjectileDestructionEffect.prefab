@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5394553268106622689}
   - component: {fileID: 5394553268106622688}
   - component: {fileID: 5394553268106622703}
-  - component: {fileID: -7391805448718114194}
   m_Layer: 0
   m_Name: ProjectileDestructionEffect
   m_TagString: ParticleProjectile
@@ -4871,15 +4870,3 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &-7391805448718114194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5394553268106622702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d158c822bdd05574b8ff5f5df57815b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

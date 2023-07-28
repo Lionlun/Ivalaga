@@ -181,7 +181,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8774106987816181491}
-  - component: {fileID: 8774106987816181484}
   - component: {fileID: 4590466356021063614}
   - component: {fileID: 8774106987816181485}
   - component: {fileID: 8774106987816181486}
@@ -210,21 +209,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8774106987816181484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8774106987816181487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28f61b3c2bf760e4f88c93996e6ab872, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  particleEffectPrefab: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
-  timerForNextAttack: 0.1
-  cooldown: 0.1
 --- !u!114 &4590466356021063614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,10 +221,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7c2e0f709cb0f43bd615fa6039c126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleEffectPrefab: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
-  timerForNextAttack: 0.1
-  cooldown: 0.1
-  Player: {fileID: 0}
+  ParticleEffectPrefab: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
+  TimerForNextAttack: 0.1
+  Cooldown: 0.1
+  BulletOwnDamage: 1
+  BulletDamage: 10
 --- !u!50 &8774106987816181485
 Rigidbody2D:
   serializedVersion: 4
@@ -319,7 +304,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ed351ff4bdb3d8c40ae6be7339bc0ff3, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.272
-  m_Pitch: 0.8
+  m_Pitch: 0.95
   Loop: 0
   Mute: 0
   Spatialize: 0

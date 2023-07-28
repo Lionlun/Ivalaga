@@ -1,58 +1,44 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class HealthPack : MonoBehaviour
 {
-    //public UnityEvent OnCollision;
     float directionX = 0;
     float sideSpeed = 4f;
 
-    private void Start()
+    void Start()
     {
         detrmineDirectionX();
     }
-    private void Update()
+    void Update()
     {
         ConstantMoveToSide();
     }
 
-
-
-
-
     void ConstantMoveToSide()
     {
-        
-            transform.Translate(directionX*Time.deltaTime*sideSpeed, 0, 0);
-           
-       
+        transform.Translate(directionX*Time.deltaTime*sideSpeed, 0, 0);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if (collision.CompareTag("Player"))
         {
-            GlobalEvents.SendHealthPackPickedUp();
+			Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+			playerHealth.GetHealth(50);
             Destroy(gameObject);
         }
-      
     }
-    
 
-    void detrmineDirectionX()
+
+	void detrmineDirectionX()
     {
         if (transform.position.x <= 0)
         {
             directionX = 1;
-
-
         }
         else
         {
             directionX = -1;
         }
-
     }
 }

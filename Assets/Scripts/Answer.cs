@@ -1,25 +1,36 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Answer : MonoBehaviour
 {
-    
-    TextMeshPro text;
-    private ParticleSystem particles;
+	public bool IsDestroyed { get; private set; }
 
-    private float timer = 1f;
-    private float destructionTimer = 10f;
-    private bool isCorrect;
+    public static event Action OnAnswerDestroyed;
 
-    public bool IsDestroyed { get; private set; } = false;
+	TextMeshPro text;
+    [SerializeField] ParticleSystem particles;
+
+	Player player;
+
+    float timer = 1f;
+    float destructionTimer = 10f;
+    bool isCorrect;
 
     private int result;
 
-    void Start()
+	private void OnEnable()
+	{
+		OnAnswerDestroyed += Die;
+	}
+	private void OnDisable()
+	{
+		OnAnswerDestroyed -= Die;
+	}
+	void Start()
     {
-
+		player = FindObjectOfType<Player>();
 	}
 
     void Update()
@@ -27,8 +38,10 @@ public class Answer : MonoBehaviour
         destructionTimer-=Time.deltaTime;
         if (destructionTimer <= 0) 
         {
-            IsDestroyed= true;
-            Destroy(gameObject);
+            IsDestroyed = true;
+			OnAnswerDestroyed?.Invoke();
+
+			Destroy(gameObject);
         }
     }
 	private void FixedUpdate()
@@ -58,26 +71,33 @@ public class Answer : MonoBehaviour
 
             if (timer <=0)
             {
-                if(isCorrect)
+				var playerHealth = collision.gameObject.GetComponentInParent<Health>();
+
+				var effect = Instantiate(particles, transform.position, Quaternion.identity);
+				effect.Play();
+
+				if (isCorrect)
                 {
-                    Debug.Log("YOU ARE RIGHT, BITCH");
+					playerHealth.GetHealth(50);
                 }
                 else
                 {
-                    Debug.Log("YOU ARE DUMB AS FUCK");
+					playerHealth.TakeDamage(100);
                 }
 
                 IsDestroyed = true;
-            }
+				OnAnswerDestroyed?.Invoke();
+			}
         }
-	}
-
-	private void OnDestroy()
-	{
 	}
 
 	private void Move()
 	{
 		transform.Translate(Vector3.down * 5f * Time.deltaTime, Space.World);
 	}
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }

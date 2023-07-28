@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -21,7 +19,8 @@ public class GreatRay : MonoBehaviour
 			if (collision.gameObject.tag == "Player")
 			{
 				Player player = collision.gameObject.GetComponentInParent<Player>();
-				player.TakeDamage(150);
+				Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+				playerHealth.TakeDamage(150);
 				player.TakePoints(300);
 				isAttackPhase = false;
 			}

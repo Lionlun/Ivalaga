@@ -7,7 +7,7 @@ public class BossRay : MonoBehaviour
 {
     private bool isAttackPhase;
 	Boss boss;
-	Vector3 shootingPointOffset = new Vector3(0, -2f);
+	Vector3 shootingPointOffset = new Vector3(0, -1.4f);
 
 	private void Start()
 	{
@@ -37,7 +37,8 @@ public class BossRay : MonoBehaviour
 			if (collision.gameObject.tag == "Player")
 			{
 				Player player = collision.gameObject.GetComponentInParent<Player>();
-				player.TakeDamage(150);
+				Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+				playerHealth.TakeDamage(150);
 				player.TakePoints(300);
 				isAttackPhase = false;
 			}

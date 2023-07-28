@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBackgroundVisual : MonoBehaviour
@@ -9,16 +8,9 @@ public class SpawnBackgroundVisual : MonoBehaviour
     private float snakeRespawnTime =5f;
     private float snakeGap = 0.2f;
 
-
     void Start()
     {
         StartCoroutine(SpawnSnake(snakePrefab, snakeRespawnTime));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private IEnumerator SpawnSnake(BackGroundSnake snake, float interval)

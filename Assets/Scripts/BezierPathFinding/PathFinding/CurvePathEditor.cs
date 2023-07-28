@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 [CustomEditor(typeof(CurvePath))]
 public class CurvePathEditor : Editor
 {
-	
 	public CurvePath curvePath;
 
 	private void Awake()

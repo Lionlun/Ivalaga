@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyBulletSpeed: 6
   lifetime: 4
+  particleEffect: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
 --- !u!50 &1755752714923312605
 Rigidbody2D:
   serializedVersion: 4

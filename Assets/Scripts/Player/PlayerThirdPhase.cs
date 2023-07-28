@@ -8,17 +8,12 @@ public class PlayerThirdPhase : ScriptableObject, IPlayerBehaviour
     public Animator animator;
     public PlayerBehaviour playerBehaviour;
 	public Player player;
-
 	public PlayerGun gun;
 
-	private int pointsToPreviousPhase = 800;
-
-	public bool IsTier3 { get; private set; }
+	private int pointsToPreviousPhase = 1000;
 
     public void Enter()
     {
-
-        IsTier3= true;
         animator.SetBool("IsThird", true);
         animator.SetBool("IsSecond", false);
         animator.SetBool("IsThirdDamaged", false);
@@ -27,7 +22,6 @@ public class PlayerThirdPhase : ScriptableObject, IPlayerBehaviour
     public void Exit()
     {
         animator.SetBool("IsThird", false);
-        IsTier3 = false;
     }
 
     public void Update()

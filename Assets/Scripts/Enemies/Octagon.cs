@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Unity.Jobs;
-using Unity.Collections;
-using Unity.Mathematics;
+
 
 public class Octagon : EnemyBaseClass
 {
@@ -16,7 +12,7 @@ public class Octagon : EnemyBaseClass
 
 	private Vector3 rotationSpeed = new Vector3(0,0,1);
 
-	float AttackTiming = 4f;
+	float attackTiming = 4f;
 	float cooldown = 0.1f;
 	float timeToDeath = 16f;
 
@@ -32,22 +28,17 @@ public class Octagon : EnemyBaseClass
 		EnemyAttack();
 	}
 
-	public override void EnemyTakeDamage(float damage)
-	{
-		EnemyHealth -= damage;
-	}
-
 	protected override void EnemyAttack()
 	{
-		if (AttackTiming > 0)
+		if (attackTiming > 0)
 		{
-			AttackTiming -= Time.deltaTime;
+			attackTiming -= Time.deltaTime;
 		}
-		else if (AttackTiming <= 0)
+		else if (attackTiming <= 0)
 		{
 			var newBulletFormation = Instantiate(octagonBulletFormation, shootingPoint.position, Quaternion.Euler(rotationSpeed));
 			
-			AttackTiming = cooldown;
+			attackTiming = cooldown;
 		}
 	}
 
@@ -68,10 +59,5 @@ public class Octagon : EnemyBaseClass
 		{
 			animator.SetTrigger("IsDead");
 		}
-	}
-
-	private void Destroy()
-	{
-		Destroy(gameObject);
 	}
 }

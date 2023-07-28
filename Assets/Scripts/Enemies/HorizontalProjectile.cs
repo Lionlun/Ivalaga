@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class HorizontalProjectile : MonoBehaviour
 {
-    float speed = 5f;
+    float speed = 15f;
+    [SerializeField] ParticleSystem particleEffect;
+    [SerializeField] GameObject projectileAlert;
+
     void Start()
     {
+        var newAlert = Instantiate(projectileAlert, new Vector3(-16, transform.position.y), Quaternion.identity);
+        Destroy(newAlert, 2);
         Destroy(gameObject, 8f);
-    }
+	}
     void FixedUpdate()
     {
         Move();
@@ -23,11 +27,10 @@ public class HorizontalProjectile : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			Player player = collision.gameObject.GetComponentInParent<Player>();
-			player.TakeDamage(10);
-
-			//particleEffect.transform.position = transform.position;
-			//particleEffect.Play();
+			Health playerHealth = collision.gameObject.GetComponentInParent<Health>();
+			playerHealth.TakeDamage(10);
+            var effect = Instantiate(particleEffect, transform.position, Quaternion.identity);
+			effect.Play();
 
 			Destroy(gameObject);
 		}

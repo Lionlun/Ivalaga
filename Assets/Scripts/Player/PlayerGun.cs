@@ -1,16 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class PlayerGun : MonoBehaviour
 {
+	public Player Player;
+
 	private float timerForNextAttack = 0.1f;
 	private float cooldown = 0.1f;
 	private int bulletOwnDamage;
 	[SerializeField] Transform ShootingPoint;
-    public Player Player;
     
     public void Shoot(PlayerBulletBase playerBulletType)
     {
@@ -26,7 +24,7 @@ public class PlayerGun : MonoBehaviour
 
 			bulletOwnDamage = bullet.BulletOwnDamage;
 
-			Player.TakeDamage(bulletOwnDamage);
+			Player.TakeDamageFromOwnBullet(bulletOwnDamage);
 			timerForNextAttack = cooldown;
 		}
     }

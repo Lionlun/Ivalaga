@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3852807315606984218}
   - component: {fileID: 3852807315606984213}
   - component: {fileID: 3852807315606984219}
+  - component: {fileID: 1145213056424023427}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -76,12 +77,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 950113b984effb945984174f14f57ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 3000
+  BossParts: []
+  currentBehaviour: {fileID: 0}
   shootingPoint: {fileID: 3852807316484290281}
   enemyBullet: {fileID: 6642533538171067932, guid: 2eb34b0e074e1d744950b5ec26dd3e77, type: 3}
   bossRay: {fileID: 6339797010578223279, guid: c74361cebfb643a45b3b9c90cacd3909, type: 3}
-  BossParts: []
-  teleportEffectPrefab: {fileID: 244333910237513761, guid: b3ebeb97a18dc314992a1bcaaba99408, type: 3}
+  teleportEffectPrefab: {fileID: 3617741990930746143, guid: 8dab176c335b60e4ba867ccd2dff782d, type: 3}
+  bossPartMover: {fileID: 3852807316944309394}
+  shootEffect: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
+--- !u!114 &1145213056424023427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3852807315606984212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd5eabd35bf11748a13487e4c282ce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsPlaced: 0
 --- !u!1 &3852807316484290280
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3852807316484290280}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.45, y: -3.16, z: 0}
+  m_LocalPosition: {x: 0.45, y: -2.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,8 +173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae7c1b5322824c42bf5c556920a9db5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isCircle: 0
-  isInitial: 0
+  IsCircle: 0
+  IsInitial: 0
+  IsStopped: 0
 --- !u!1001 &3852807314981643134
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -189,6 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8bd506e703dac40a9df255e89c7fe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleEffect: {fileID: 5394553268106622688, guid: 94816a2ccd362e7468553e22a84453e0, type: 3}
+  projectileAlert: {fileID: 6935802567624888268, guid: 87f651bd6ff1eda488435d2195354dfb, type: 3}
 --- !u!50 &7497073226921798369
 Rigidbody2D:
   serializedVersion: 4

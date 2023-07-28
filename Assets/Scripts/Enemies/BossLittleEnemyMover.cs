@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +9,6 @@ public class BossLittleEnemyMover:MonoBehaviour
 	static float offsetY = 0;
 	Boss boss;
 	List<int> ints = new List<int>();
-	BossLittleEnemyTier2 tier2;
 	BossLittleEnemy littleEnemy;
 	private float distanceToBoss = 4;
 	public static Dictionary<int, bool> rawList = new Dictionary<int, bool>() //плохо, что просто не могу размер ряда установить
@@ -54,10 +52,26 @@ public class BossLittleEnemyMover:MonoBehaviour
 		}
 	}
 
+	public void ResetRawList()
+	{
+		foreach (var key in rawList.Keys.ToList())
+		{
+			rawList[key] = false;
+		}
+	}
+	public void SetOffset(Vector3 offset)
+	{
+		this.offset = offset;
+	}
+	public void ResetOffsetY()
+	{
+		offsetY = 0;
+	}
+
 	private async void OccupyPosition()
 	{
-		
-		var littleEnemyOffsetX = Random.Range(-3, 5); // плохо, что это значение зависит от словаря
+
+		var littleEnemyOffsetX = GetRandomOffset();
 
 		while (rawList[littleEnemyOffsetX])
 		{
@@ -65,7 +79,7 @@ public class BossLittleEnemyMover:MonoBehaviour
 			{
 				break;
 			}
-			littleEnemyOffsetX = Random.Range(-3, 5); // плохо, что это значение зависит от словаря
+			littleEnemyOffsetX = GetRandomOffset();
 		}
 		var littleEnemyOffsetXY = new Vector3(littleEnemyOffsetX, offsetY - distanceToBoss);
 
@@ -81,7 +95,7 @@ public class BossLittleEnemyMover:MonoBehaviour
 		{
 			rawList[element] = true;
 		}
-		
+
 		SetOffset(littleEnemyOffsetXY);
 		littleEnemy.SetOffset(littleEnemyOffsetXY);
 		if (rawList.Values.All(value => value))
@@ -93,19 +107,8 @@ public class BossLittleEnemyMover:MonoBehaviour
 		await Task.Delay(100);
 	}
 
-	public void ResetRawList()
+	int GetRandomOffset()
 	{
-		foreach (var key in rawList.Keys.ToList())
-		{
-			rawList[key] = false;
-		}
-	}
-	public void SetOffset(Vector3 offset)
-	{
-		this.offset = offset;
-	}
-	public void ResetOffsetY()
-	{
-		offsetY = 0;
+		return Random.Range(-3, 5); // плохо, что это значение зависит от словаря
 	}
 }

@@ -1,50 +1,28 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
-public class BossPart: EnemyBaseClass
+public class BossPart : MonoBehaviour, IHealth
 {
-	[SerializeField] public int bossPartNumber;
-	Boss boss;
-	[SerializeField] BossLittleEnemy enemy;
 	[SerializeField] BossPart fractionPrefab;
+	[SerializeField] BossLittleEnemy enemy;
 
-	Vector3 position;
-	public Vector3 circlePosition;
+	[SerializeField] public int BossPartNumber;
+	Boss boss;
 
+	private Vector3 circlePosition;
 	private Vector3 initialPosition;
-
 	private Vector3 centerPosition;
 
 	public static event Action OnDestroyed;
-	public bool isDestroyed;
-
+	public bool IsDestroyed;
 
 	void Start()
 	{
-		EnemyHealth = 200; //200
-		boss = GetComponentInParent<Boss>();
+		boss = FindObjectOfType<Boss>();
 
 		boss.BossParts.Add(this);
-	}
-	void Update()
-	{
-		if (EnemyHealth <=0) 
-		{
-			OnDestroyed?.Invoke();
-			InstantiateFractions();
-			SpawnEnemyOnDeath();
-			boss.BossParts.Remove(this);
-			Die();
-		}
-	}
-
-	public override void EnemyTakeDamage(float damage)
-	{
-		EnemyHealth -= damage;
 	}
 
 	public void SetCirclePosition(Vector3 circlePosition)
@@ -59,10 +37,6 @@ public class BossPart: EnemyBaseClass
 	{
 		this.centerPosition = centerPosition;
 	}
-	protected override void EnemyAttack()
-	{
-		throw new System.NotImplementedException();
-	}
 
 	public async Task MovePartsToCircle()
 	{
@@ -72,8 +46,8 @@ public class BossPart: EnemyBaseClass
 		}
 		while (transform.position != circlePosition && this.gameObject != null)
 		{
-		transform.position = Vector3.MoveTowards(transform.position, circlePosition, 0.1f);
-		await Task.Delay(10);
+			transform.position = Vector3.MoveTowards(transform.position, circlePosition, 0.1f);
+			await Task.Delay(10);
 		}
 	}
 
@@ -102,19 +76,20 @@ public class BossPart: EnemyBaseClass
 			await Task.Delay(10);
 		}
 	}
-
-	private void SpawnEnemyOnDeath()
+	
+	public void SetDestroyed()
 	{
-		for (int i = 0; i < 8; i++)
-		{
-			var enemySpawnPosition = new Vector3(UnityEngine.Random.Range(-7, 7), 13);
-			var newEnemy = Instantiate(enemy, enemySpawnPosition, Quaternion.identity);
-		}	
+		IsDestroyed = true;
 	}
 
-	public void SetPostion(Vector3 position)
+	public void Die()
 	{
-		this.position = position;
+		boss.BossParts.Remove(this);
+		GlobalEvents.SendEnemyKilled();
+		InstantiateFractions();
+		SpawnEnemyOnDeath();
+		OnDestroyed?.Invoke();
+		Destroy(gameObject);
 	}
 
 	private void InstantiateFractions()
@@ -123,8 +98,13 @@ public class BossPart: EnemyBaseClass
 		fraction.transform.parent = boss.gameObject.transform;
 		fraction.SetDestroyed();
 	}
-	public void SetDestroyed()
+
+	private void SpawnEnemyOnDeath()
 	{
-		isDestroyed = true;
+		for (int i = 0; i < 8; i++)
+		{
+			var enemySpawnPosition = new Vector3(UnityEngine.Random.Range(-7, 7), 13);
+			var newEnemy = Instantiate(enemy, enemySpawnPosition, Quaternion.identity);
+		}
 	}
 }

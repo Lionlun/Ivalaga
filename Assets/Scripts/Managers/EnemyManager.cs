@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlobalEnemyManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
-    int numberOfEnemiesTotal = 0;
+	int numberOfEnemiesRemaining;
+	int numberOfEnemiesTotal = 0;
     List<EnemyController> enemies;
-    private int numberOfEnemiesRemaining;
 
     public void RegisterEnemy(EnemyController enemy)
     {
@@ -18,9 +16,5 @@ public class GlobalEnemyManager : MonoBehaviour
     public void UnregisterEnemy(EnemyController enemyKilled)
     {
         int enemiesRemainingNotification = numberOfEnemiesRemaining - 1;
-
-
-
-
     }
 }

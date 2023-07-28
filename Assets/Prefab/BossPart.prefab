@@ -10,9 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5934113470232778380}
   - component: {fileID: 1890639312889173285}
+  - component: {fileID: 3593732996769259269}
+  - component: {fileID: 1536358999087983648}
   - component: {fileID: 7868833705326386735}
   - component: {fileID: 1153300186339894885}
-  m_Layer: 0
+  - component: {fileID: 7677685492029482179}
+  m_Layer: 6
   m_Name: BossPart
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -47,12 +50,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74086b40d4a9a6945a1893b0026c1671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 0
-  bossPartNumber: 0
-  enemy: {fileID: 0}
   fractionPrefab: {fileID: 7921894552657887959, guid: 8a7809f4b0a482d4b8c3269c21324d06, type: 3}
-  circlePosition: {x: 0, y: 0, z: 0}
-  isDestroyed: 0
+  enemy: {fileID: 7455705123756407364, guid: a336ae813abbc854a96b5f73f7df47c8, type: 3}
+  BossPartNumber: 0
+  IsDestroyed: 0
+--- !u!114 &3593732996769259269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2684224709979869185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 200
+--- !u!114 &1536358999087983648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2684224709979869185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fcccbbe79845045a0190750741736d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &7868833705326386735
 Rigidbody2D:
   serializedVersion: 4
@@ -100,6 +127,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7677685492029482179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2684224709979869185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f57e2ba2e1b20d6488f45c1f2e0ef3f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7630869745790828956
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9067120020053192941}
   - component: {fileID: 34720992760939709}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}

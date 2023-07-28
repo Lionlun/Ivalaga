@@ -4,52 +4,51 @@ using UnityEngine;
 
 public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
 {
-    public Animator animator;
-    public PlayerBehaviour playerBehaviour;
-	public Player player;
+    public Animator Animator;
+    public PlayerBehaviour PlayerBehaviour;
+	public Player Player;
+    public PlayerGun Gun;
 
-    public PlayerGun gun;
-
-	private int pointsToNextPhase = 600;
+	private int pointsToNextPhase = 800;
 	private int pointsToPreviousPhase = 400;
 
 	public bool IsTier2 { get; private set; }
 
     public void Enter()
     {
-        animator.SetBool("IsSecondDamaged", true);
-        animator.SetBool("IsSecond", false);
+        Animator.SetBool("IsSecondDamaged", true);
+        Animator.SetBool("IsSecond", false);
     }
 
     public void Exit()
     {
-        animator.SetBool("IsSecondDamaged", false);
+        Animator.SetBool("IsSecondDamaged", false);
     }
 
     public void Update()
     {
 
-        if (player.Points > pointsToNextPhase)
+        if (Player.Points > pointsToNextPhase)
         {
-            playerBehaviour.SetSecondPhase();
+            PlayerBehaviour.SetSecondPhase();
         }
 
-        if (player.Points < pointsToPreviousPhase)
+        if (Player.Points < pointsToPreviousPhase)
         {
-            playerBehaviour.SetFirstPhase();
+            PlayerBehaviour.SetFirstPhase();
         }
     }
 
 	public void Shoot(PlayerBulletBase bulletType)
 	{
-		gun.Shoot(bulletType);
+		Gun.Shoot(bulletType);
 	}
 
 	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun , Player player)
     {
-        this.animator = animator;
-		this.playerBehaviour = playerBehaviour;
-		this.player = player;
-		this.gun = gun;
+        this.Animator = animator;
+		this.PlayerBehaviour = playerBehaviour;
+		this.Player = player;
+		this.Gun = gun;
     }
 }

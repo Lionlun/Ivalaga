@@ -1,17 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class BGScroller : MonoBehaviour
 {
     [Range(-5f,5f)]
     [SerializeField] private float scrollSpeed;
-
-  
-    
-
 
     private void FixedUpdate()
     {
@@ -21,6 +14,5 @@ public class BGScroller : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 28, 2);
         }
-
     }
 }

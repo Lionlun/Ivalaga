@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf3049f7b2989a47a5b93b0ecd92f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 0
+  EnemyHealth: 0
   bullet: {fileID: 1012279204203028763, guid: 21292481e0d2608499b448fdfa287d2b, type: 3}
   shootingPoint: {fileID: 5742813291666020698}
   octagonBulletFormation: {fileID: 1012279204203028763, guid: 21292481e0d2608499b448fdfa287d2b, type: 3}
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c0f89455bbf3249a64d25b3cb4e6c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
+  rb: {fileID: 5742813291540686690}
 --- !u!50 &5742813291540686690
 Rigidbody2D:
   serializedVersion: 4

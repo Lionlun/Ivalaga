@@ -1,80 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-    private float maxHealth = 10f;
-    private float criticalHealthRatio = 0.3f;
 
-    public UnityAction<float, GameObject> OnDamaged;
-    public UnityAction<float> OnHealed;
-    public UnityAction OnDie;
+	[SerializeField] private int health;
+    [SerializeField] private int maxHealth;
+    
 
-    public float CurrentHealth { get; set; }
-    public bool Invincible { get; set; }
-    public bool CanPickupHealth() => CurrentHealth < maxHealth;
-    public float GetRatio() => CurrentHealth / maxHealth;
-    public bool IsCritical() => GetRatio() <= criticalHealthRatio;
-
-    bool isDead;
-
-    private void Start()
+    void Start()
     {
-        CurrentHealth = maxHealth;
-    }
+        health = maxHealth;
+	}
 
-    public void Heal(float healAmount)
+    void Update()
     {
-        float healthBefore = CurrentHealth;
-        CurrentHealth += healAmount;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, maxHealth);
-
-        float trueHealAmount = CurrentHealth - healthBefore;
-        if (trueHealAmount > 0f)
+        if (health <= 0)
         {
-            OnHealed?.Invoke(trueHealAmount);
-        }
+            Die();
+		}
+	}
 
-    }
-
-    public void TakeDamage(float damage, GameObject damageSource)
+    public void GetHealth(int health) 
     {
-        if (Invincible)
-            return;
+        this.health += health;
 
-        float healthBefore = CurrentHealth;
-        CurrentHealth -= damage;
-        CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, maxHealth);
-
-        float trueDamageAmount = healthBefore - CurrentHealth;
-        if (trueDamageAmount > 0f)
+        if (this.health > maxHealth)
         {
-            OnDamaged?.Invoke(trueDamageAmount, damageSource);
-        }
-
-        HandleDeath();
-    }
-
-    public void Kill()
-    {
-        CurrentHealth = 0f;
-
-        OnDamaged?.Invoke(maxHealth, null);
-
-        HandleDeath();
-    }
-
-    void HandleDeath()
-    {
-        if (isDead)
-            return;
-
-        if (CurrentHealth <= 0f)
-        {
-            isDead = true;
-            OnDie?.Invoke();
+            this.health = maxHealth;
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        this.health -= damage;
+    }
+
+    private void Die()
+    {
+        var objectHealth = GetComponent<IHealth>();
+
+        if (objectHealth != null)
+        {
+            objectHealth.Die();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    } 
 }

@@ -5,13 +5,12 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
 	public Animator animator;
+	public Dictionary<Type, IPlayerBehaviour> behavioursMap { get; set; }
+	public IPlayerBehaviour behaviourCurrent;
 
 	private PlayerGun gun;
 
 	Player player;
-
-	public Dictionary<Type, IPlayerBehaviour> behavioursMap { get; set; }
-	public IPlayerBehaviour behaviourCurrent;
 
 	void Start()
     {
