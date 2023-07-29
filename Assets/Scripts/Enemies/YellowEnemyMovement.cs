@@ -5,9 +5,8 @@ public class YellowEnemyMovement : Movable
 {
     float enemySpeed = 0f;
     float sinCenterY;
-    bool isMovingRight;
-    bool isMovingLeft;
     float oscilationRate = 0.01f;
+
     void Start()
     {
         StartCoroutine(EnemyMovementPattern());

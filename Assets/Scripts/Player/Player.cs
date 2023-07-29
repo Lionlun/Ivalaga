@@ -2,13 +2,8 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHealth
 {
-	#region ship's properties
-	private int currentHealth;
-	[SerializeField] private int maxHealth = 500;
-	#endregion
-
 	public Animator animator;
 
     public int Points = 0; //¬озможно заменить на event
@@ -29,20 +24,21 @@ public class Player : MonoBehaviour
 
 	Color32 damageColor = new Color32(255, 124, 124, 245);
 
+	Health health;
+
 	void Awake()
     {
-        GlobalEvents.OnEnemyKilled.AddListener(EnemyKilled);
-       // GlobalEvents.OnEnemyKilled.AddListener(GetHealth); TODO изменить, чтобы сочеталось с компонентом Health
+       GlobalEvents.OnEnemyKilled.AddListener(GetPoints);
+       GlobalEvents.OnEnemyKilled.AddListener(GetHealth);
     }
     void Start()
     {
+		health = GetComponent<Health>();
 		playerUI = GetComponentInChildren<PlayerUI>();
 		characterController = GetComponent<CharacterController2D>();
 		pointsUI = FindObjectOfType<Points>();
 		healthBar = FindObjectOfType<HealthBar>();
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		currentHealth = maxHealth;
-		healthBar.SetMaxHealth(currentHealth);
     }
     void Update()
     {
@@ -77,8 +73,8 @@ public class Player : MonoBehaviour
 		if (!characterController.IsInvincible)
 		{
 			spriteRenderer.color = damageColor;
-			currentHealth -= bulletDamage;
-			healthBar.SetHealth(currentHealth);
+			health.TakeDamage(bulletDamage);
+			healthBar.SetHealth(health.CurrentHealth);
 			await Task.Delay(100);
 			spriteRenderer.color = Color.white;
 		}
@@ -86,20 +82,15 @@ public class Player : MonoBehaviour
 
 	public void TakeDamageFromOwnBullet(int ownBulletDamage)
 	{
-		currentHealth -= ownBulletDamage;
-		healthBar.SetHealth(currentHealth);
+		health.TakeDamage(ownBulletDamage);
+		healthBar.SetHealth(health.CurrentHealth);
 	}
 
-	/*public void GetHealth()
+	public void GetHealth()
 	{
 		health.GetHealth(50);
 		playerUI.PopUpHealthText();
-		healthBar.SetHealth(currentHealth);
-	}*/
-
-    void EnemyKilled() // TODO изменить
-    {
-        GetPoints();
+		healthBar.SetHealth(health.CurrentHealth);
 	}
 
     void MaxPoints()
@@ -110,7 +101,7 @@ public class Player : MonoBehaviour
         }
     }
 
-	private void OnDestroy()
+	public void Die()
 	{
 		OnPlayerDeath?.Invoke(0);
 	}

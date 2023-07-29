@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BossLittleEnemyTier2 : EnemyBaseClass
+public class BossLittleEnemyTier2 : EnemyBaseClass, IHealth
 {
 	#region Attack
 	private float timerForNextAttack;

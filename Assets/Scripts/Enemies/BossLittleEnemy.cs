@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class BossLittleEnemy : EnemyBaseClass
+public class BossLittleEnemy : EnemyBaseClass, IHealth
 {
 	#region Attack
 	private float cooldown = 8f;

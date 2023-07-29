@@ -4,18 +4,17 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
 
-	[SerializeField] private int health;
+	[SerializeField] public int CurrentHealth;
     [SerializeField] private int maxHealth;
     
-
     void Start()
     {
-        health = maxHealth;
+        CurrentHealth = maxHealth;
 	}
 
     void Update()
     {
-        if (health <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
 		}
@@ -23,17 +22,17 @@ public class Health : MonoBehaviour
 
     public void GetHealth(int health) 
     {
-        this.health += health;
+        this.CurrentHealth += health;
 
-        if (this.health > maxHealth)
+        if (this.CurrentHealth > maxHealth)
         {
-            this.health = maxHealth;
+            this.CurrentHealth = maxHealth;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        this.health -= damage;
+        this.CurrentHealth -= damage;
     }
 
     private void Die()

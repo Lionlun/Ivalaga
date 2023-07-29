@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
-public class BlueEnemy : EnemyBaseClass
+public class BlueEnemy : EnemyBaseClass, IHealth
 {
 	[SerializeField] RedEnemyBullet redEnemyBulet;
 	[SerializeField] Transform shootingPoint;
