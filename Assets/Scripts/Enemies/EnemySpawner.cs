@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour
 
 	#region SpawnTime
 	private float firstEnemyInterval = 9f;
-	private float timeToSpawnBoss = 5f; //150
+	private float timeToSpawnBoss = 150f; //150
 	private float timeToSpawnOctagon = 75f; //75
 	private float timeToSpawnGreatRay = 30f;
 	private float timeToSpawnHorizontalProjectile = 5f;

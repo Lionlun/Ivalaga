@@ -4,70 +4,40 @@ using UnityEngine;
 
 public class Player : MonoBehaviour, IHealth
 {
-	public Animator animator;
-
-    public int Points = 0; //Возможно заменить на event
-
 	public static event Action<int> OnPlayerDeath;
 
-	[SerializeField] private PlayerGun gun;
+	CharacterController2D characterController;
+	PlayerPoints playerPoints;
+	Health health;
 
 	PlayerUI playerUI;
-	Points pointsUI;
 	HealthBar healthBar;
-
-	int pointsToGet = 100;
-
-	CharacterController2D characterController;
-
 	SpriteRenderer spriteRenderer;
-
 	Color32 damageColor = new Color32(255, 124, 124, 245);
-
-	Health health;
 
 	void Awake()
     {
-       GlobalEvents.OnEnemyKilled.AddListener(GetPoints);
        GlobalEvents.OnEnemyKilled.AddListener(GetHealth);
     }
     void Start()
     {
+		playerPoints = GetComponent<PlayerPoints>();
 		health = GetComponent<Health>();
 		playerUI = GetComponentInChildren<PlayerUI>();
 		characterController = GetComponent<CharacterController2D>();
-		pointsUI = FindObjectOfType<Points>();
 		healthBar = FindObjectOfType<HealthBar>();
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
-    void Update()
-    {
-        MaxPoints();
     }
 
 	public void TakePoints(int points)
 	{
-		if (!characterController.IsInvincible)
-		{
-			Points -= points;
-			pointsUI.SetPoints(Points);
-
-			if (Points < 0)
-			{
-				Points = 0;
-			}
-		}
+		playerPoints.TakePoints(points);
 	}
 	public void GetPoints()
 	{
-		Points += pointsToGet;
-		pointsUI.SetPoints(Points);
-
-		if (Points > 1200)
-		{
-			Points = 1200;
-		}
+		playerPoints.GetPoints();
 	}
+
 	public async void TakeDamage(int bulletDamage)
 	{
 		if (!characterController.IsInvincible)
@@ -92,14 +62,6 @@ public class Player : MonoBehaviour, IHealth
 		playerUI.PopUpHealthText();
 		healthBar.SetHealth(health.CurrentHealth);
 	}
-
-    void MaxPoints()
-    {
-        if (Points > 1300)
-        {
-            Points = 1200;
-        }
-    }
 
 	public void Die()
 	{

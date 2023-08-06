@@ -7,6 +7,7 @@ public class PlayerFirstPhase : ScriptableObject, IPlayerBehaviour
     public PlayerBehaviour PlayerBehaviour;
     public Player Player;
     public PlayerGun Gun;
+    public PlayerPoints PlayerPoints;
 
     private int pointsToNextPhase = 800;
 
@@ -24,7 +25,7 @@ public class PlayerFirstPhase : ScriptableObject, IPlayerBehaviour
 
     public void Update()
     {
-       if (Player.Points > pointsToNextPhase)
+       if (PlayerPoints.Points > pointsToNextPhase)
        {
             PlayerBehaviour.SetSecondPhase();
        }
@@ -35,11 +36,12 @@ public class PlayerFirstPhase : ScriptableObject, IPlayerBehaviour
         Gun.Shoot(bulletType);
     }
 
-    public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player)
+    public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player, PlayerPoints playerPoints)
     {
         this.Animator = animator;
         this.PlayerBehaviour = playerBehaviour;
         this.Player = player;
         this.Gun = gun;
+        this.PlayerPoints = playerPoints;
     }
 }

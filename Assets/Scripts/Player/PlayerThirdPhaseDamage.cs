@@ -6,47 +6,49 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerThirdPhaseDamaged", menuName = "ScriptableObjects/PlayerThirdPhaseDamaged", order = 1)]
 public class PlayerThirdPhaseDamage : ScriptableObject, IPlayerBehaviour
 {
-    public Animator animator;
-    public PlayerBehaviour playerBehaviour;
-	public Player player;
-    public PlayerGun gun;
+    public Animator Animator;
+    public PlayerBehaviour PlayerBehaviour;
+	public Player Player;
+    public PlayerPoints PlayerPoints;
+    public PlayerGun Gun;
 
 	private int pointsToNextPhase = 1200;
 	private int pointsToPreviousPhase = 800;
 
 	public void Enter()
     {
-        animator.SetBool("IsThirdDamaged", true);
-        animator.SetBool("IsThird", false);
+        Animator.SetBool("IsThirdDamaged", true);
+        Animator.SetBool("IsThird", false);
     }
 
     public void Exit()
     {
-        animator.SetBool("IsThirdDamaged", false);
+        Animator.SetBool("IsThirdDamaged", false);
     }
 
     public void Update()
     {
-        if (player.Points < pointsToPreviousPhase)
+        if (PlayerPoints.Points < pointsToPreviousPhase)
         {
-            playerBehaviour.SetSecondPhase();
+            PlayerBehaviour.SetSecondPhase();
         }
-        if (player.Points> pointsToNextPhase) 
+        if (PlayerPoints.Points> pointsToNextPhase) 
         {
-            playerBehaviour.SetThirdPhase();
+            PlayerBehaviour.SetThirdPhase();
         }
     }
 
 	public void Shoot(PlayerBulletBase bulletType)
 	{
-		gun.Shoot(bulletType);
+		Gun.Shoot(bulletType);
 	}
 
-	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player)
+	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player, PlayerPoints playerPoints)
     {
-        this.animator = animator;
-		this.playerBehaviour = playerBehaviour;
-		this.player = player;
-		this.gun = gun;
-    }
+        this.Animator = animator;
+		this.PlayerBehaviour = playerBehaviour;
+		this.Player = player;
+		this.Gun = gun;
+		this.PlayerPoints = playerPoints;
+	}
 }

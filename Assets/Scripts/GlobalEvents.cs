@@ -7,6 +7,6 @@ public class GlobalEvents : MonoBehaviour
      
     public static void SendEnemyKilled()
     {
-        OnEnemyKilled.Invoke();
+        OnEnemyKilled?.Invoke();
     }
 }

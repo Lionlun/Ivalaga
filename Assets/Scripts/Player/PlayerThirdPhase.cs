@@ -5,43 +5,45 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerThirdPhase", menuName = "ScriptableObjects/PlayerThirdPhase", order = 1)]
 public class PlayerThirdPhase : ScriptableObject, IPlayerBehaviour
 {
-    public Animator animator;
-    public PlayerBehaviour playerBehaviour;
-	public Player player;
-	public PlayerGun gun;
+    public Animator Animator;
+    public PlayerBehaviour PlayerBehaviour;
+	public Player Player;
+    public PlayerPoints PlayerPoints;
+	public PlayerGun Gun;
 
 	private int pointsToPreviousPhase = 1000;
 
     public void Enter()
     {
-        animator.SetBool("IsThird", true);
-        animator.SetBool("IsSecond", false);
-        animator.SetBool("IsThirdDamaged", false);
+        Animator.SetBool("IsThird", true);
+        Animator.SetBool("IsSecond", false);
+        Animator.SetBool("IsThirdDamaged", false);
     }
 
     public void Exit()
     {
-        animator.SetBool("IsThird", false);
+        Animator.SetBool("IsThird", false);
     }
 
     public void Update()
     {
-        if (player.Points < pointsToPreviousPhase)
+        if (PlayerPoints.Points < pointsToPreviousPhase)
         {
-           playerBehaviour.SetThirdDamagedPhase();
+           PlayerBehaviour.SetThirdDamagedPhase();
         }
     }
 
 	public void Shoot(PlayerBulletBase bulletType)
 	{
-		gun.Shoot(bulletType);
+		Gun.Shoot(bulletType);
 	}
 
-	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player)
+	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun, Player player, PlayerPoints playerPoints)
     {
-        this.animator = animator;
-		this.playerBehaviour = playerBehaviour;
-		this.player = player;
-		this.gun = gun;
-    }
+        this.Animator = animator;
+		this.PlayerBehaviour = playerBehaviour;
+		this.Player = player;
+		this.Gun = gun;
+		this.PlayerPoints = playerPoints;
+	}
 }

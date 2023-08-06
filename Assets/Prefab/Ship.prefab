@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2015357062264148441}
   - component: {fileID: 2015357062264148225}
   - component: {fileID: 2015357062264148457}
+  - component: {fileID: 5335838090671762030}
   - component: {fileID: 3108108793395633926}
   - component: {fileID: 2015357062264148468}
   - component: {fileID: 2015357062264148471}
@@ -56,9 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b37ddb0312ccf44f9daf33b8246c475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
   animator: {fileID: 2015357062264148457}
-  Points: 0
   gun: {fileID: 2015357062264148225}
 --- !u!50 &2015357062264148441
 Rigidbody2D:
@@ -115,6 +114,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5335838090671762030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015357060177989528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 002cde853557f1048a03e9455672c520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Points: 0
 --- !u!114 &3108108793395633926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85c026c29d849614f879480b4f61aaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  CurrentHealth: 0
   maxHealth: 500
 --- !u!114 &2015357062264148468
 MonoBehaviour:

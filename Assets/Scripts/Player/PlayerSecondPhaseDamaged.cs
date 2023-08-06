@@ -7,6 +7,7 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
     public Animator Animator;
     public PlayerBehaviour PlayerBehaviour;
 	public Player Player;
+    public PlayerPoints PlayerPoints;
     public PlayerGun Gun;
 
 	private int pointsToNextPhase = 800;
@@ -28,12 +29,12 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
     public void Update()
     {
 
-        if (Player.Points > pointsToNextPhase)
+        if (PlayerPoints.Points > pointsToNextPhase)
         {
             PlayerBehaviour.SetSecondPhase();
         }
 
-        if (Player.Points < pointsToPreviousPhase)
+        if (PlayerPoints.Points < pointsToPreviousPhase)
         {
             PlayerBehaviour.SetFirstPhase();
         }
@@ -44,11 +45,12 @@ public class PlayerSecondPhaseDamaged : ScriptableObject, IPlayerBehaviour
 		Gun.Shoot(bulletType);
 	}
 
-	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun , Player player)
+	public void Init(Animator animator, PlayerBehaviour playerBehaviour, PlayerGun gun , Player player, PlayerPoints playerPoints)
     {
         this.Animator = animator;
 		this.PlayerBehaviour = playerBehaviour;
 		this.Player = player;
 		this.Gun = gun;
-    }
+		this.PlayerPoints = playerPoints;
+	}
 }

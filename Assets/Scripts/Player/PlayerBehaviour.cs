@@ -11,10 +11,12 @@ public class PlayerBehaviour : MonoBehaviour
 	private PlayerGun gun;
 
 	Player player;
+	PlayerPoints playerPoints;
 
 	void Start()
     {
 		player = GetComponent<Player>();
+		playerPoints = GetComponent<PlayerPoints>();
 		gun = GetComponent<PlayerGun>();
 		this.InitBehaviours();
 		SetBehaviourByDefault();
@@ -66,19 +68,19 @@ public class PlayerBehaviour : MonoBehaviour
 		behavioursMap = new Dictionary<Type, IPlayerBehaviour>();
 
 		PlayerFirstPhase playerFirstPhase = ScriptableObject.CreateInstance("PlayerFirstPhase") as PlayerFirstPhase;
-		playerFirstPhase.Init(animator, this, gun, player);
+		playerFirstPhase.Init(animator, this, gun, player, playerPoints);
 
 		PlayerSecondPhase playerSecondPhase = ScriptableObject.CreateInstance("PlayerSecondPhase") as PlayerSecondPhase;
-		playerSecondPhase.Init(animator, this, gun, player);
+		playerSecondPhase.Init(animator, this, gun, player, playerPoints);
 
 		PlayerThirdPhase playerThirdPhase = ScriptableObject.CreateInstance("PlayerThirdPhase") as PlayerThirdPhase;
-		playerThirdPhase.Init(animator, this, gun, player);
+		playerThirdPhase.Init(animator, this, gun, player, playerPoints);
 
 		PlayerSecondPhaseDamaged playerSecondPhaseDamaged = ScriptableObject.CreateInstance("PlayerSecondPhaseDamaged") as PlayerSecondPhaseDamaged;
-		playerSecondPhaseDamaged.Init(animator, this, gun, player);
+		playerSecondPhaseDamaged.Init(animator, this, gun, player, playerPoints);
 
 		PlayerThirdPhaseDamage playerThirdPhaseDamaged = ScriptableObject.CreateInstance("PlayerThirdPhaseDamage") as PlayerThirdPhaseDamage;
-		playerThirdPhaseDamaged.Init(animator, this, gun, player);
+		playerThirdPhaseDamaged.Init(animator, this, gun, player, playerPoints);
 
 		this.behavioursMap[typeof(PlayerFirstPhase)] = playerFirstPhase;
 		this.behavioursMap[typeof(PlayerSecondPhase)] = playerSecondPhase;
